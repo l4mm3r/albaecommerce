@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        italiana: ["Italiana", "sans-serif"],
+        itali: ["Italiana", "sans-serif"],
         dm: ["DM Sans", "sans-serif"],
       }
     },
