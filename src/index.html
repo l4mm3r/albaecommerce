@@ -7,7 +7,7 @@
     <link href="./output.css" rel="stylesheet" />
 </head>
 <body class="bg-gray-950">
-    <nav class="font-itali">
+    <nav class="font-itali relative z-50">
         <ul class="text-gray-50 text-2xl flex gap-16 mt-8 justify-end pr-20">
             <li>
                 <a href="#" >Home</a>
@@ -25,10 +25,21 @@
     </nav>
 
     <section>
-        <div>
-            <div class="text-gray-50 ">
-                <p class="font-dm text-4xl tracking-widest">new arrivals</p>
-                <h1>OAKMOSS</h1>
+        <div class="relative">
+            <div class="mt-40 text-center">
+                <p class="font-dm text-gray-600 text-3xl tracking-widest">new scents</p>
+                <h1 class="font-itali text-gray-300 text-9xl -mt-16 bg-gradient-to-b from-gray-950 to-gray-50 inline-block text-transparent bg-clip-text z-0">OAKMOSS</h1>
+            </div>
+            <div class="absolute -top-64 flex  justify-center">
+                <img src="./assets/img/newscent1.png" alt="oakmoss candle" class="w-2/3 z-30">
+                <img src="./assets/img/smoke.png" alt="fire smoke" class="h-96 absolute mt-24 z-20">
+                <span class="bg-orange-400 blur-3xl opacity-20 rounded-full w-2/5 h-2/5 absolute top-1/4 z-10"></span>
+            </div>
+            <div class="flex w-4/5  flex-col items-end mt-20">
+                <div>
+                    <p class="text-gray-300 w-60">Lorem ipsum dolor sit amet consectetur. Massa quam auctor lectus arcu ipsum id adipiscing. Porta viverra est etiam Quisque aliquam pharetra diam tincidunt sit enim.</p>
+                    <button class="text-gray-50 text-xl w-32 mt-8 py-1 bg-orange-400 rounded-full relative z-50"><a href="#" >read more</a></button>
+                </div>
             </div>
         </div>
     </section>
