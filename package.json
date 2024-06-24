@@ -1,19 +1,19 @@
 {
-  "devDependencies": {
-    "@biomejs/biome": "1.8.2",
-    "globals": "^15.6.0",
-    "tailwindcss": "^3.4.4"
-  },
-  "name": "albaecommerce",
-  "description": "",
-  "version": "1.0.0",
-  "main": "tailwind.config.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "biome:check": "biome check ./src",
-    "biome:format": "biome format --write ./src" 
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"devDependencies": {
+		"@biomejs/biome": "1.8.2",
+		"globals": "^15.6.0",
+		"tailwindcss": "^3.4.4"
+	},
+	"name": "albaecommerce",
+	"description": "",
+	"version": "1.0.0",
+	"main": "tailwind.config.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"biome:check": "biome check ./src",
+		"biome:format": "biome format --write ./src"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
 }
