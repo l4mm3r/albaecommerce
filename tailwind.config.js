@@ -7,6 +7,21 @@ module.exports = {
 				itali: ['Italiana', 'sans-serif'],
 				dm: ['DM Sans', 'sans-serif'],
 			},
+			animation: {
+				'infinite-scroll': 'infinite-scroll 35s linear infinite',
+				'infinite-scroll-reverse':
+					'infinite-scroll-reverse 105s linear infinite',
+			},
+			keyframes: {
+				'infinite-scroll': {
+					from: { transform: 'translateX(0)' },
+					to: { transform: 'translateX(-100%)' },
+				},
+				'infinite-scroll-reverse': {
+					from: { transform: 'translateX(-100%)' },
+					to: { transform: 'translateX(0)' },
+				},
+			},
 		},
 		letterSpacing: {
 			tightest: '-.075em',

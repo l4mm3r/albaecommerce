@@ -605,6 +605,14 @@ video {
   margin-top: -4rem;
 }
 
+.mb-20{
+  margin-bottom: 5rem;
+}
+
+.mt-0{
+  margin-top: 0px;
+}
+
 .mt-10{
   margin-top: 2.5rem;
 }
@@ -635,6 +643,10 @@ video {
 
 .mt-8{
   margin-top: 2rem;
+}
+
+.-mt-2{
+  margin-top: -0.5rem;
 }
 
 .inline-block{
@@ -693,6 +705,34 @@ video {
   width: 100%;
 }
 
+@keyframes infinite-scroll{
+  from{
+    transform: translateX(0);
+  }
+
+  to{
+    transform: translateX(-100%);
+  }
+}
+
+.animate-infinite-scroll{
+  animation: infinite-scroll 35s linear infinite;
+}
+
+@keyframes infinite-scroll-reverse{
+  from{
+    transform: translateX(-100%);
+  }
+
+  to{
+    transform: translateX(0);
+  }
+}
+
+.animate-infinite-scroll-reverse{
+  animation: infinite-scroll-reverse 105s linear infinite;
+}
+
 .flex-col{
   flex-direction: column;
 }
@@ -719,6 +759,18 @@ video {
 
 .gap-16{
   gap: 4rem;
+}
+
+.gap-4{
+  gap: 1rem;
+}
+
+.overflow-hidden{
+  overflow: hidden;
+}
+
+.whitespace-nowrap{
+  white-space: nowrap;
 }
 
 .rounded-2xl{
@@ -829,6 +881,10 @@ video {
 
 .text-3xl{
   font-size: 1.953rem;
+}
+
+.text-4xl{
+  font-size: 2.441rem;
 }
 
 .text-7xl{
