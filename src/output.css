@@ -605,12 +605,12 @@ video {
   margin-top: -4rem;
 }
 
-.mb-20{
-  margin-bottom: 5rem;
+.-mt-2{
+  margin-top: -0.5rem;
 }
 
-.mt-0{
-  margin-top: 0px;
+.mb-20{
+  margin-bottom: 5rem;
 }
 
 .mt-10{
@@ -643,10 +643,6 @@ video {
 
 .mt-8{
   margin-top: 2rem;
-}
-
-.-mt-2{
-  margin-top: -0.5rem;
 }
 
 .inline-block{
