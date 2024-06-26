@@ -104,7 +104,7 @@ const printAllCards = async () => {
 const createCard = (data) => {
 	const article = document.createElement('article')
 	article.className =
-		'w-64 h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-8'
+		'w-64 h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-7'
 
 	const header = document.createElement('header')
 	header.className = 'flex justify-end'
@@ -151,7 +151,7 @@ const createCard = (data) => {
 const createCard2 = (data) => {
 	const article = document.createElement('article')
 	article.className =
-		'w-64 h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-8'
+		'w-64 h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-7'
 
 	const header = document.createElement('header')
 	header.className = 'flex justify-end'
@@ -198,17 +198,24 @@ const createCard2 = (data) => {
 const createBigCard = (data) => {
 	const article = document.createElement('article')
 	article.className =
-		'w-[512px] h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-8'
+		'w-[600px] h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-7'
 
 	const header = document.createElement('header')
 	header.className = 'flex justify-end'
 
-	const img = document.createElement('img')
-	img.src = `${data.image}`
-	img.className = 'w-full h-40 object-cover rounded-xl'
+	const img1 = document.createElement('img')
+	img1.src = `${data.image.foto1}`
+	img1.className = 'w-full h-40 object-cover rounded-xl'
+
+	const img2 = document.createElement('img')
+	img2.src = `${data.image.foto2}`
+	img2.className = 'w-2/3 h-28 object-cover rounded-xl mt-6'
 
 	const div = document.createElement('div')
-	div.className = 'text-right font-dm text-gray-50'
+	div.className = 'text-right font-dm text-gray-50 flex'
+
+	const div2 = document.createElement('div')
+	div2.className = 'flex flex-col w-1/3'
 
 	const h3 = document.createElement('h3')
 	h3.className = 'font-bold text-2xl  mt-3'
@@ -235,8 +242,9 @@ const createBigCard = (data) => {
 	button.textContent = 'add to cart +'
 
 	article.append(header, div, footer)
-	header.append(img)
-	div.append(h3, p1, p2, p3)
+	header.append(img1)
+	div.append(img2, div2)
+	div2.append(h3, p1, p2, p3)
 	footer.append(button)
 
 	document.querySelector('.allCardsContainer').append(article)
