@@ -1,5 +1,15 @@
 [
 	{
+		"img": {
+			"foto1": "./assets/img/cardimg.png",
+			"foto2": "./assets/img/cardimg.png"
+		},
+		"name": "OAKMOSS",
+		"size": "100ml",
+		"scent": "Lavender",
+		"price": "r$90,00"
+	},
+	{
 		"img": "./assets/img/cardimg.png",
 		"name": "OAKMOSS",
 		"size": "100ml",
@@ -7,28 +17,21 @@
 		"price": "r$90,00"
 	},
 	{
-		"img": "./assets/img/newscent1.png",
+		"img": "./assets/img/cardimg.png",
 		"name": "OAKMOSS",
 		"size": "100ml",
 		"scent": "Lavender",
 		"price": "r$90,00"
 	},
 	{
-		"img": "./assets/img/newscent1.png",
+		"img": "./assets/img/cardimg.png",
 		"name": "OAKMOSS",
 		"size": "100ml",
 		"scent": "Lavender",
 		"price": "r$90,00"
 	},
 	{
-		"img": "./assets/img/newscent1.png",
-		"name": "OAKMOSS",
-		"size": "100ml",
-		"scent": "Lavender",
-		"price": "r$90,00"
-	},
-	{
-		"img": "./assets/img/newscent1.png",
+		"img": "./assets/img/cardimg.png",
 		"name": "OAKMOSS",
 		"size": "100ml",
 		"scent": "Lavender",
