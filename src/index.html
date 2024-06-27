@@ -24,6 +24,28 @@
             </li>
         </ul>
     </nav>
+    <!--CartTab container-->
+    <div class="carTab bg-gray-800 w-[512px] rounded-2xl fixed top-20 right-10 bottom-auto grid grid-rows-[70px,_1fr,_70px] p-8 z-40 text-gray-50 bg-opacity-90  shadow-lg backdrop-blur-sm">
+        <h5 class="font-dm text-base text-right">Your cart</h5>
+        <div class="listCart">
+            <!--Items in cart-->
+        </div>
+        <hr class="h-px my-8 bg-orange-200 border-0 dark:bg-orange-200">
+        <div class="totalsContainer flex flex-col">
+            <div class="subTotal flex justify-between font-dm text-sm text-gray-300">
+                <p>Sub total</p>
+                <p>$valor</p>
+            </div>
+            <div class="cartTotal flex justify-between font-dm text-base font-bold">
+                <p>Total <span class="font-dm font-medium text-gray-300">- Free Shipping</span></p>
+                <p>$valor</p>
+            </div>
+        </div>
+        <div class="buttonsCarTab flex flex-col place-items-end font-dm text-base mt-10">
+            <button class="proceedCarTab bg-orange-400 rounded-full py-1 px-4 text-gray-50">PROCEED TO CHECKOUT</button>
+            <button class="clearCarTab border-blue-400 border-2 rounded-full py-1 px-4 font-dm text-base mt-3">clear cart</button>
+        </div>
+    </div>
 <!--Hero section-->
     <section>
         <div class="relative">
@@ -39,7 +61,7 @@
             <div class="flex w-10/12  flex-col items-end">
                 <div>
                     <p class=" text-gray-300 w-60 font-dm">Lorem ipsum dolor sit amet consectetur. Massa quam auctor lectus arcu ipsum id adipiscing. Porta viverra est etiam Quisque aliquam pharetra diam tincidunt sit enim.</p>
-                    <button class="text-gray-50 text-xl w-32 mt-8 py-1 bg-orange-400 rounded-full relative z-50"><a href="#" >read more</a></button>
+                    <button class="text-gray-50 text-xl w-32 mt-8 py-1 bg-orange-400 rounded-full relative z-30"><a href="#" >read more</a></button>
                 </div>
             </div>
         </div>
