@@ -77,9 +77,9 @@ const mapAllItems = async () => {
 const printTopCards = async () => {
 	try {
 		const data = await mapTopSellers()
-		data.forEach((item) => {
+		for (const item of data) {
 			createCard(item)
-		})
+		}
 	} catch (error) {
 		console.log(error)
 	}
@@ -93,9 +93,9 @@ const printAllCards = async () => {
 		} else {
 			console.log('No data found')
 		}
-		data.slice(1).forEach((item) => {
+		for (const item of data.slice(1)) {
 			createCard2(item)
-		})
+		}
 	} catch (error) {
 		console.log(error)
 	}
