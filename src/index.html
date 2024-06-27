@@ -6,6 +6,7 @@
     <title>Document</title>
     <link href="./output.css" rel="stylesheet" />
 </head>
+<!--Navbard-->
 <body class="bg-gray-950">
     <nav class="font-itali relative z-50">
         <ul class="text-gray-50 text-2xl flex gap-16 mt-8 justify-end pr-20 items-center">
@@ -19,11 +20,11 @@
                 <a href="#">Log in</a>
             </li>
             <li>
-                <a href="#"><img src="./assets/icons/iconCart.svg" alt="shoppin cart"></a>
+                <a href="#" class="relative"><img src="./assets/icons/iconCart.svg" alt="shoppin cart"><span class="bg-orange-400 w-10 h-10 flex justify-center items-center rounded-full absolute top-1/2 -right-5">0</span></a>
             </li>
         </ul>
     </nav>
-
+<!--Hero section-->
     <section>
         <div class="relative">
             <div class="mt-40 text-center">
@@ -43,7 +44,7 @@
             </div>
         </div>
     </section>
-    
+    <!--Top seller container-->
     <div class="flex justify-center ">
     <section class="w-10/12 bg-gray-900 mt-36 rounded-3xl p-10 ">
         <div class="text-center">
@@ -54,12 +55,12 @@
         </div>
 
         <section class="topSellerContainer flex w-full justify-evenly mb-20">
-            <!--render top seller cards-->
+            <!--Render top seller cards-->
         </section>
     </section>
     </div>
 
-    <!--horizontal infinite scroll-->
+    <!--Horizontal infinite scroll-->
     <div class="mt-24 text-gray-50 text-4xl flex overflow-hidden justify-center whitespace-nowrap font-itali">
         <div class="gap-4 flex animate-infinite-scroll">
             <span>our products</span>
@@ -201,10 +202,10 @@
         </div>
     </div>
 
-    <!--render products cards--> 
+    <!--All products cards--> 
     <div class="flex justify-center">
         <section class="allCardsContainer w-8/12 flex flex-wrap justify-between">
-            <!--render all cards-->
+            <!--Render all cards-->
         </section>
     </div>
 <script src="./index.js"></script>
