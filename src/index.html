@@ -6,6 +6,7 @@
     <title>Document</title>
     <link href="./output.css" rel="stylesheet" />
 </head>
+
 <!--Navbard-->
 <body class="bg-gray-950">
     <nav class="font-itali relative z-50">
@@ -25,27 +26,47 @@
         </ul>
     </nav>
     <!--CartTab container-->
-    <div class="carTab bg-gray-800 w-[512px] rounded-2xl fixed top-20 right-10 bottom-auto grid grid-rows-[70px,_1fr,_70px] p-8 z-40 text-gray-50 bg-opacity-90  shadow-lg backdrop-blur-sm">
+    <article class="carTab bg-gray-800 w-[512px] rounded-2xl fixed top-20 right-10 bottom-auto grid grid-rows-[70px,_1fr,_70px] p-8 z-40 text-gray-50 bg-opacity-90  shadow-lg backdrop-blur-sm">
         <h5 class="font-dm text-base text-right">Your cart</h5>
-        <div class="listCart">
-            <!--Items in cart-->
-        </div>
+        <!--Items in cart-->
+        <section class="listCart">
+            <div class="cartItem flex">
+                <div class="itemImg">
+                    <img src="./assets/img/cardimg.png" alt="" class="w-24 rounded-lg">
+                </div>
+                <div class="itemDescription flex flex-col pl-6 justify-center">
+                    <p>$name</p>
+                    <p>$size - $scent</p>
+                </div>
+            </div>
+            <div class="cartItemPrice flex flex-row-reverse justify-between mt-2">
+                <div class="totalPrice">
+                    r$valor
+                </div>
+                <div class="quantity">
+                    <span class="minus"> < </span>
+                    <span> 1 </span>
+                    <span class="plus"> > </span>
+                </div>
+            </div>
+        </section>
         <hr class="h-px my-8 bg-orange-200 border-0 dark:bg-orange-200">
-        <div class="totalsContainer flex flex-col">
+        <section class="totalsContainer flex flex-col">
             <div class="subTotal flex justify-between font-dm text-sm text-gray-300">
                 <p>Sub total</p>
-                <p>$valor</p>
+                <p>$subTotal</p>
             </div>
             <div class="cartTotal flex justify-between font-dm text-base font-bold">
-                <p>Total <span class="font-dm font-medium text-gray-300">- Free Shipping</span></p>
+                <p>Total <span class="font-dm font-medium text-gray-300">+ taxes</span></p>
                 <p>$valor</p>
             </div>
-        </div>
+        </section>
         <div class="buttonsCarTab flex flex-col place-items-end font-dm text-base mt-10">
             <button class="proceedCarTab bg-orange-400 rounded-full py-1 px-4 text-gray-50">PROCEED TO CHECKOUT</button>
             <button class="clearCarTab border-blue-400 border-2 rounded-full py-1 px-4 font-dm text-base mt-3">clear cart</button>
         </div>
-    </div>
+    </article>
+
 <!--Hero section-->
     <section>
         <div class="relative">
