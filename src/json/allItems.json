@@ -1,40 +1,40 @@
 [
 	{
 		"img": {
-			"foto1": "./assets/img/cardimg.png",
-			"foto2": "./assets/img/cardimg.png"
+			"foto1": "./assets/img/cardimg2.png",
+			"foto2": "./assets/img/cardimg2.png"
 		},
-		"name": "OAKMOSS",
+		"name": "TENESSE",
 		"size": "100ml",
-		"scent": "Lavender",
+		"scent": "CocoNut",
 		"price": "r$90,00"
 	},
 	{
-		"img": "./assets/img/cardimg.png",
-		"name": "OAKMOSS",
+		"img": "./assets/img/cardimg4.jpg",
+		"name": "MOON",
 		"size": "100ml",
-		"scent": "Lavender",
+		"scent": "Sweet Vanilla",
 		"price": "r$90,00"
 	},
 	{
-		"img": "./assets/img/cardimg.png",
-		"name": "OAKMOSS",
-		"size": "100ml",
-		"scent": "Lavender",
+		"img": "./assets/img/cardimg5.jpg",
+		"name": "SPRAY",
+		"size": "250ml",
+		"scent": "Baby Rose",
 		"price": "r$90,00"
 	},
 	{
-		"img": "./assets/img/cardimg.png",
-		"name": "OAKMOSS",
+		"img": "./assets/img/cardimg6.jpg",
+		"name": "PINKY",
 		"size": "100ml",
-		"scent": "Lavender",
+		"scent": "Bubble Gum",
 		"price": "r$90,00"
 	},
 	{
-		"img": "./assets/img/cardimg.png",
-		"name": "OAKMOSS",
-		"size": "100ml",
-		"scent": "Lavender",
+		"img": "./assets/img/cardimg7.jpg",
+		"name": "POCKET",
+		"size": "80ml",
+		"scent": "Watermelon",
 		"price": "r$90,00"
 	}
 ]

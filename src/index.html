@@ -21,15 +21,15 @@
                 <a href="#">Log in</a>
             </li>
             <li>
-                <a href="#" class="relative"><img src="./assets/icons/iconCart.svg" alt="shoppin cart"><span class="bg-orange-400 w-10 h-10 flex justify-center items-center rounded-full absolute top-1/2 -right-5">2</span></a>
+                <a href="#" class="relative cartIcon"><img src="./assets/icons/iconCart.svg" alt="shoppin cart"><span class="bg-orange-400 w-10 h-10 flex justify-center items-center rounded-full absolute top-1/2 -right-5">2</span></a>
             </li>
         </ul>
     </nav>
     <!--CartTab container-->
-    <article class="carTab bg-gray-800 w-[512px] rounded-2xl fixed top-20 right-10 bottom-auto grid grid-rows-[70px,_1fr,_70px] p-8 z-40 text-gray-50 bg-opacity-90  shadow-lg backdrop-blur-sm">
+    <article class="cartTabContainer bg-gray-800 w-[512px] rounded-2xl fixed top-20 right-20 bottom-auto grid grid-rows-[70px,_1fr,_70px] p-8 z-40 text-gray-50 bg-opacity-90  shadow-lg backdrop-blur-sm" style="display: none;">
         <h5 class="font-dm text-base text-right">Your cart</h5>
         <!--Items in cart-->
-        <section class="listCart">
+        <section class="listCart overflow-auto">
             <div class="cartItem flex">
                 <div class="itemImg">
                     <img src="./assets/img/cardimg.png" alt="" class="w-24 rounded-lg">
@@ -43,10 +43,10 @@
                 <div class="totalPrice">
                     r$valor
                 </div>
-                <div class="quantity">
-                    <span class="minus"> < </span>
+                <div class="quantity pl-6 font-dm flex gap-4">
+                    <span class="minus"> - </span>
                     <span> 1 </span>
-                    <span class="plus"> > </span>
+                    <span class="plus"> + </span>
                 </div>
             </div>
         </section>
@@ -253,5 +253,6 @@
     </div>
 <script src="./scripts/randomid.js"></script>
 <script src="./index.js"></script>
+<script src="./scripts/cart.js"></script>
 </body>
 </html>

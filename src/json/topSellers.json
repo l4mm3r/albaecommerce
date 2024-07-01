@@ -1,23 +1,23 @@
 [
 	{
 		"img": "./assets/img/cardimg.png",
-		"name": "OAKMOSS",
-		"size": "100ml",
-		"scent": "Lavender",
-		"price": "r$90,00"
+		"name": "RED VELVET",
+		"size": "180ml",
+		"scent": "Red berry",
+		"price": "r$99,00"
 	},
 	{
-		"img": "./assets/img/cardimg.png",
+		"img": "./assets/img/cardimg2.png",
 		"name": "OAKMOSS",
 		"size": "100ml",
-		"scent": "Lavender",
-		"price": "r$90,00"
+		"scent": "Red Wood",
+		"price": "r$50,00"
 	},
 	{
-		"img": "./assets/img/cardimg.png",
-		"name": "OAKMOSS",
-		"size": "100ml",
-		"scent": "Lavender",
-		"price": "r$90,00"
+		"img": "./assets/img/cardimg3.jpg",
+		"name": "CHAMOIS",
+		"size": "150ml",
+		"scent": "Mint Leaf",
+		"price": "r$75,00"
 	}
 ]
