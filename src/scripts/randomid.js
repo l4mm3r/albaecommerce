@@ -1,4 +1,4 @@
-const randomId = (length = 6) => {
+const generateUniqueId = async (length = 6) => {
 	return Math.random()
 		.toString(36)
 		.substring(2, length + 2)
@@ -12,53 +12,46 @@ const fetchTopSellersJson = async () => {
 				'Content-Type': 'application/json',
 			},
 		})
-		const data = response.json()
+		if (!response.ok) {
+			throw new Error('Failed to fetch data')
+		}
+		const data = await response.json()
 		return data
 	} catch (error) {
 		console.error(error)
 	}
 }
 
-const addTopSellersId = async (ids) => {
+const addTopSellersId = async () => {
 	try {
 		const data = await fetchTopSellersJson()
 		for (const item of data) {
-			item.id = randomId()
+			item.id = await generateUniqueId()
 		}
-
-		const ids = data.map((item) => item.id)
-		return ids
+		return data
 	} catch (error) {
 		console.error(error)
 	}
-}
-
-const checkIds = async (ids) => {
-	const itemsIds = await addTopSellersId(ids)
-	const mapIds = itemsIds.map((item) => item)
-	const newId = randomId()
-	mapIds.find((id) => {
-		return id === newId
-	})
-	return mapIds
 }
 
 const generateIds = async () => {
 	const limit = 100
 	let attempts = 0
-	let id = false
+	let uniqueId = false
 	try {
-		while (!id && attempts < limit) {
-			id = await addTopSellersId()
-			if (!checkIds(id)) {
-				id = false
+		while (!uniqueId && attempts < limit) {
+			const topSellersIds = await addTopSellersId()
+			const newId = await generateUniqueId()
+			if (!topSellersIds.includes(newId)) {
+				uniqueId = newId
+			} else {
+				console.log('uniqueid = true')
 				attempts++
 			}
 		}
-		return id
 	} catch (error) {
-		console.error(error)
+		console.log(error)
 	}
 }
 
-console.log(generateIds())
+addTopSellersId()

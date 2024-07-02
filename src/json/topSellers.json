@@ -1,5 +1,6 @@
 [
 	{
+		"id": "1",
 		"img": "./assets/img/cardimg.png",
 		"name": "RED VELVET",
 		"size": "180ml",
@@ -7,6 +8,7 @@
 		"price": "r$99,00"
 	},
 	{
+		"id": "2",
 		"img": "./assets/img/cardimg2.png",
 		"name": "OAKMOSS",
 		"size": "100ml",
@@ -14,6 +16,7 @@
 		"price": "r$50,00"
 	},
 	{
+		"id": "3",
 		"img": "./assets/img/cardimg3.jpg",
 		"name": "CHAMOIS",
 		"size": "150ml",
