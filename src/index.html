@@ -21,7 +21,7 @@
                 <a href="#">Log in</a>
             </li>
             <li>
-                <a href="#" class="relative cartIcon"><img src="./assets/icons/iconCart.svg" alt="shoppin cart"><span class="bg-orange-400 w-10 h-10 flex justify-center items-center rounded-full absolute top-1/2 -right-5">2</span></a>
+                <a href="#" class="relative cartIcon"><img src="./assets/icons/iconCart.svg" alt="shoppin cart"><span class="bg-orange-400 w-10 h-10 flex justify-center items-center rounded-full absolute top-1/2 -right-5">0</span></a>
             </li>
         </ul>
     </nav>
@@ -30,26 +30,9 @@
         <h5 class="font-dm text-base text-right">Your cart</h5>
         <!--Items in cart-->
         <section class="listCart overflow-auto">
-            <div class="cartItem flex">
-                <div class="itemImg">
-                    <img src="./assets/img/cardimg.png" alt="" class="w-24 rounded-lg">
-                </div>
-                <div class="itemDescription flex flex-col pl-6 justify-center">
-                    <p>$name</p>
-                    <p>$size - $scent</p>
-                </div>
-            </div>
-            <div class="cartItemPrice flex flex-row-reverse justify-between mt-2">
-                <div class="totalPrice">
-                    r$valor
-                </div>
-                <div class="quantity pl-6 font-dm flex gap-4">
-                    <span class="minus"> - </span>
-                    <span> 1 </span>
-                    <span class="plus"> + </span>
-                </div>
-            </div>
+            <!--Render items in cart-->
         </section>
+        
         <hr class="h-px my-8 bg-orange-200 border-0 dark:bg-orange-200">
         <section class="totalsContainer flex flex-col">
             <div class="subTotal flex justify-between font-dm text-sm text-gray-300">
@@ -251,7 +234,6 @@
             <!--Render all cards-->
         </section>
     </div>
-<script src="./scripts/randomid.js"></script>
 <script src="./index.js"></script>
 <script src="./scripts/cart.js"></script>
 </body>

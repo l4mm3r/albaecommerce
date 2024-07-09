@@ -1,5 +1,6 @@
 [
 	{
+		"id": "4",
 		"img": {
 			"foto1": "./assets/img/cardimg2.png",
 			"foto2": "./assets/img/cardimg2.png"
@@ -10,6 +11,7 @@
 		"price": "r$90,00"
 	},
 	{
+		"id": "5",
 		"img": "./assets/img/cardimg4.jpg",
 		"name": "MOON",
 		"size": "100ml",
@@ -17,6 +19,7 @@
 		"price": "r$90,00"
 	},
 	{
+		"id": "6",
 		"img": "./assets/img/cardimg5.jpg",
 		"name": "SPRAY",
 		"size": "250ml",
@@ -24,6 +27,7 @@
 		"price": "r$90,00"
 	},
 	{
+		"id": "7",
 		"img": "./assets/img/cardimg6.jpg",
 		"name": "PINKY",
 		"size": "100ml",
@@ -31,6 +35,7 @@
 		"price": "r$90,00"
 	},
 	{
+		"id": "8",
 		"img": "./assets/img/cardimg7.jpg",
 		"name": "POCKET",
 		"size": "80ml",
