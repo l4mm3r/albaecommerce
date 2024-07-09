@@ -295,7 +295,10 @@ const renderCart = async (product_id) => {
 	try {
 		const data = await fetchTopSellers()
 		const item = data.find((item) => item.id === product_id)
-		console.log(`the item name is: ${item.name} and price is ${item.price}`)
+		console.log(
+			`the item name is: ${item.name} and quantity is ${carts[0].quantity}`,
+		)
+		console.log(carts)
 		createItemInCart(item)
 	} catch (error) {
 		console.log(error)
@@ -305,13 +308,13 @@ const renderCart = async (product_id) => {
 const createItemInCart = (item) => {
 	// Create elements for the cart item
 	const div = document.createElement('div')
-	div.className = 'cartItem flex'
+	div.className = 'cartItem flex mt-4'
 
 	const div2 = document.createElement('div')
 	div2.className = 'itemImg'
 
 	const img = document.createElement('img')
-	img.src = `${item.image}` // Assuming item has an 'img' property
+	img.src = `${item.img}` // Assuming item has an 'img' property
 	img.className = 'w-24 rounded-lg'
 
 	const div3 = document.createElement('div')
@@ -343,7 +346,7 @@ const createItemInCart = (item) => {
 	span1.textContent = '-' // Placeholder for minus symbol
 
 	const span2 = document.createElement('span')
-	span2.textContent = item.quantity // Assuming item has a 'quantity' property
+	span2.textContent = `${carts[0].quantity}` // Assuming item has a 'quantity' property
 
 	const span3 = document.createElement('span')
 	span3.className = 'plus'
