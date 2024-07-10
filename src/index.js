@@ -232,6 +232,12 @@ const listProducts = document.querySelector('.topSellerContainer')
 const updateQuantity = document.querySelector('.listCart')
 const carts = []
 
+const cartCounter = () => {
+	const cartCounter = document.querySelector('.cartCounter')
+	const quantity = carts.reduce((acc, item) => acc + item.quantity, 0)
+	cartCounter.textContent = quantity
+}
+
 listProducts.addEventListener('click', (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('addToCart')) {
@@ -255,6 +261,7 @@ const addToCart = async (product_id) => {
 			carts[positionThisProductInCart].quantity++
 		}
 		await renderCart(product_id)
+		cartCounter()
 	} catch (error) {
 		console.log(error)
 	}
@@ -353,6 +360,7 @@ updateQuantity.addEventListener('click', (event) => {
 		carts[positionThisProductInCart].quantity++
 		const quantity = carts[positionThisProductInCart].quantity
 		updateQuantityNumber(quantity)
+		cartCounter()
 	}
 	if (positionClick.classList.contains('minus')) {
 		const product_id =
@@ -363,5 +371,6 @@ updateQuantity.addEventListener('click', (event) => {
 		carts[positionThisProductInCart].quantity--
 		const quantity = carts[positionThisProductInCart].quantity
 		updateQuantityNumber(quantity)
+		cartCounter()
 	}
 })
