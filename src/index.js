@@ -302,6 +302,8 @@ const renderCart = async (product_id) => {
 
 const createItemInCart = (item) => {
 	// Create elements for the cart item
+	const article = document.createElement('article')
+	article.dataset.id = `${item.id}`
 
 	const div = document.createElement('div')
 	div.className = 'cartItem flex mt-4'
@@ -335,13 +337,14 @@ const createItemInCart = (item) => {
 	p3.textContent = `${item.price}` // Assuming item has a 'price' property
 
 	const div6 = document.createElement('div')
-	div6.className = 'quantity pl-6 font-dm flex gap-4'
+	div6.className = 'quantity pl-5 font-dm flex gap-4'
 
 	const span1 = document.createElement('span')
 	span1.className = 'minus cursor-pointer'
 	span1.textContent = '-' // Placeholder for minus symbol
 
 	const span2 = document.createElement('span')
+	span2.className = 'quantityNumber'
 	span2.textContent = `${carts[0].quantity}` // Assuming item has a 'quantity' property
 
 	const span3 = document.createElement('span')
@@ -356,25 +359,36 @@ const createItemInCart = (item) => {
 	div4.append(div5, div6)
 	div.append(div2, div3)
 	div4.append(div5, div6)
-
+	article.append(div, div4)
 	// Appending the constructed item to the cart list container
-	document.querySelector('.listCart').append(div, div4)
+	document.querySelector('.listCart').append(article)
+}
+
+const updateQuantityNumber = (quantity) => {
+	document.querySelector('.quantityNumber').textContent = `${quantity}`
 }
 
 updateQuantity.addEventListener('click', (event) => {
 	const positionClick = event.target
+
 	if (positionClick.classList.contains('plus')) {
-		const product_id = positionClick.parentElement.parentElement.dataset.id
+		const product_id =
+			positionClick.parentElement.parentElement.parentElement.dataset.id
 		const positionThisProductInCart = carts.findIndex(
 			(value) => value.product_id === product_id,
 		)
 		carts[positionThisProductInCart].quantity++
+		const quantity = carts[positionThisProductInCart].quantity
+		updateQuantityNumber(quantity)
 	}
 	if (positionClick.classList.contains('minus')) {
-		const product_id = positionClick.parentElement.parentElement.dataset.id
+		const product_id =
+			positionClick.parentElement.parentElement.parentElement.dataset.id
 		const positionThisProductInCart = carts.findIndex(
 			(value) => value.product_id === product_id,
 		)
 		carts[positionThisProductInCart].quantity--
+		const quantity = carts[positionThisProductInCart].quantity
+		updateQuantityNumber(quantity)
 	}
 })
