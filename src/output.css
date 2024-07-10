@@ -848,6 +848,10 @@ video {
   animation: infinite-scroll-reverse 105s linear infinite;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 .grid-rows-\[70px\2c _1fr\2c _70px\]{
   grid-template-rows: 70px 1fr 70px;
 }
