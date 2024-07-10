@@ -344,8 +344,11 @@ const createItemInCart = (item) => {
 	document.querySelector('.listCart').append(article)
 }
 
-const updateQuantityNumber = (quantity) => {
-	document.querySelector('.quantityNumber').textContent = `${quantity}`
+const updateQuantityNumber = (product_id, quantity) => {
+	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
+	if (cartItem) {
+		cartItem.querySelector('.quantityNumber').textContent = quantity
+	}
 }
 
 updateQuantity.addEventListener('click', (event) => {
@@ -359,7 +362,7 @@ updateQuantity.addEventListener('click', (event) => {
 		)
 		carts[positionThisProductInCart].quantity++
 		const quantity = carts[positionThisProductInCart].quantity
-		updateQuantityNumber(quantity)
+		updateQuantityNumber(product_id, quantity)
 		cartCounter()
 	}
 	if (positionClick.classList.contains('minus')) {
@@ -370,7 +373,7 @@ updateQuantity.addEventListener('click', (event) => {
 		)
 		carts[positionThisProductInCart].quantity--
 		const quantity = carts[positionThisProductInCart].quantity
-		updateQuantityNumber(quantity)
+		updateQuantityNumber(product_id, quantity)
 		cartCounter()
 	}
 })
