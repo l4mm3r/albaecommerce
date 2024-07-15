@@ -233,7 +233,8 @@ const printAllCards = async () => {
 ///////////////////////// SIDE CART //////////////////////////
 const listProducts = document.querySelector('.topSellerContainer')
 const updateQuantity = document.querySelector('.listCart')
-const carts = []
+const clearCart = document.querySelector('.clearCarTab')
+let carts = []
 let totalPerItem = 0
 
 //funcion para mostrar la cantidad de items totales en el carrito en la barra de navegacion
@@ -439,3 +440,18 @@ updateQuantity.addEventListener('click', async (event) => {
 		}
 	}
 })
+
+//event para vaciar el carrito
+clearCart.addEventListener('click', (event) => {
+	const positionClick = event.target
+	if (positionClick.classList.contains('clearCarTab')) {
+		emptyCart()
+	}
+})
+
+//funcion para vaciar el carrito
+const emptyCart = () => {
+	carts = []
+	document.querySelector('.listCart').innerHTML = ''
+	cartCounter()
+}
