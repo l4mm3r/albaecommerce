@@ -5,7 +5,7 @@
 		"name": "RED VELVET",
 		"size": "180ml",
 		"scent": "Red berry",
-		"price": "r$99,00"
+		"price": 99.0
 	},
 	{
 		"id": "2",
@@ -13,7 +13,7 @@
 		"name": "OAKMOSS",
 		"size": "100ml",
 		"scent": "Red Wood",
-		"price": "r$50,00"
+		"price": 50.0
 	},
 	{
 		"id": "3",
@@ -21,6 +21,6 @@
 		"name": "CHAMOIS",
 		"size": "150ml",
 		"scent": "Mint Leaf",
-		"price": "r$75,00"
+		"price": 75.0
 	}
 ]
