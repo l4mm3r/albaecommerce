@@ -231,13 +231,26 @@ const printAllCards = async () => {
 const listProducts = document.querySelector('.topSellerContainer')
 const updateQuantity = document.querySelector('.listCart')
 const carts = []
+let totalPerItem = 0
 
+//funcion para mostrar la cantidad de items totales en el carrito en la barra de navegacion
 const cartCounter = () => {
 	const cartCounter = document.querySelector('.cartCounter')
 	const quantity = carts.reduce((acc, item) => acc + item.quantity, 0)
 	cartCounter.textContent = quantity
 }
+//asigna el span para pasarle la cantidad
+const updateQuantityNumber = async (product_id, quantity) => {
+	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
+	if (cartItem) {
+		cartItem.querySelector('.quantityNumber').textContent = quantity
 
+		const totalPriceElement = cartItem.querySelector('.totalPrice p')
+		totalPriceElement.textContent = (quantity * totalPerItem).toFixed(2)
+	}
+}
+
+//evento para escuchar cuando hacen click en addtocart
 listProducts.addEventListener('click', (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('addToCart')) {
@@ -246,6 +259,7 @@ listProducts.addEventListener('click', (event) => {
 	}
 })
 
+//funcion para checkear si existe un item con el mismo id en el carrito
 const addToCart = async (product_id) => {
 	try {
 		const positionThisProductInCart = carts.findIndex(
@@ -265,28 +279,29 @@ const addToCart = async (product_id) => {
 				carts[positionThisProductInCart].quantity,
 			)
 		}
-
 		cartCounter()
 	} catch (error) {
 		console.log(error)
 	}
 }
 
+//funcion para mostrar el item en el carrito por el id
 const renderCart = async (product_id) => {
 	try {
 		const data = await fetchTopSellers()
 		const item = data.find((item) => item.id === product_id)
-		/* console.log(carts) */
 		createItemInCart(item)
 	} catch (error) {
 		console.log(error)
 	}
 }
 
+//función para crear la card del item en el carrito
 const createItemInCart = (item) => {
 	// Create elements for the cart item
 	const article = document.createElement('article')
 	article.dataset.id = `${item.id}`
+	article.className = 'itemRendered'
 
 	const div = document.createElement('div')
 	div.className = 'cartItem flex mt-4'
@@ -295,7 +310,7 @@ const createItemInCart = (item) => {
 	div2.className = 'itemImg'
 
 	const img = document.createElement('img')
-	img.src = `${item.img}` // Assuming item has an 'img' property
+	img.src = `${item.img}`
 	img.className = 'w-24 rounded-lg'
 
 	const div3 = document.createElement('div')
@@ -304,59 +319,55 @@ const createItemInCart = (item) => {
 
 	const p1 = document.createElement('p')
 	p1.className = 'text-base'
-	p1.textContent = `${item.name}` // Assuming item has a 'name' property
+	p1.textContent = `${item.name}`
 
 	const p2 = document.createElement('p')
 	p2.className = 'text-base'
-	p2.textContent = `${item.size}` // Assuming item has a 'size' property
+	p2.textContent = `${item.size}`
 
 	const div4 = document.createElement('div')
 	div4.className =
 		'cartItemPrice flex flex-row-reverse justify-between items-center mt-2'
 
-	const div5 = document.createElement('div')
-	div5.className = 'totalPrice'
+	const functionValorItem = (item) => {
+		const div5 = document.createElement('div')
+		div5.className = 'totalPrice'
 
-	const p3 = document.createElement('p')
-	p3.className = 'text-xl font-bold'
-	p3.textContent = `${item.price}` // Assuming item has a 'price' property
+		const p3 = document.createElement('p')
+		p3.className = 'text-xl font-bold'
+		p3.textContent = `${item.price}`
+
+		div5.append(p3)
+		return div5
+	}
 
 	const div6 = document.createElement('div')
 	div6.className = 'quantity pl-5 font-dm flex gap-4'
 
 	const span1 = document.createElement('span')
 	span1.className = 'minus cursor-pointer'
-	span1.textContent = '-' // Placeholder for minus symbol
-
+	span1.textContent = '-'
 	const span2 = document.createElement('span')
 	span2.className = 'quantityNumber'
-	span2.textContent = `${carts[0].quantity}` // Assuming item has a 'quantity' property
+	span2.textContent = `${carts[0].quantity}`
 
 	const span3 = document.createElement('span')
 	span3.className = 'plus cursor-pointer'
-	span3.textContent = '+' // Placeholder for plus symbol
+	span3.textContent = '+'
 
 	// Constructing the DOM structure
 	div2.appendChild(img)
 	div3.append(p1, p2)
-	div5.appendChild(p3)
 	div6.append(span1, span2, span3)
-	div4.append(div5, div6)
+	div4.append(functionValorItem(item), div6)
 	div.append(div2, div3)
-	div4.append(div5, div6)
 	article.append(div, div4)
 	// Appending the constructed item to the cart list container
 	document.querySelector('.listCart').append(article)
 }
 
-const updateQuantityNumber = (product_id, quantity) => {
-	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
-	if (cartItem) {
-		cartItem.querySelector('.quantityNumber').textContent = quantity
-	}
-}
-
-updateQuantity.addEventListener('click', (event) => {
+//funcion para incrementar o decrementar la cantidad de items en el carrito
+updateQuantity.addEventListener('click', async (event) => {
 	const positionClick = event.target
 
 	if (positionClick.classList.contains('plus')) {
@@ -365,20 +376,49 @@ updateQuantity.addEventListener('click', (event) => {
 		const positionThisProductInCart = carts.findIndex(
 			(value) => value.product_id === product_id,
 		)
-		carts[positionThisProductInCart].quantity++
-		const quantity = carts[positionThisProductInCart].quantity
-		updateQuantityNumber(product_id, quantity)
-		cartCounter()
+
+		if (positionThisProductInCart >= 0) {
+			carts[positionThisProductInCart].quantity++
+			const quantity = carts[positionThisProductInCart].quantity
+
+			// Obtener el precio del ítem
+			const data = await fetchTopSellers()
+			const item = data.find((item) => item.id === product_id)
+			const itemPrice = item.price
+
+			// Calcular el precio total del ítem y actualizar en el carrito
+			totalPerItem = quantity * itemPrice
+			updateQuantityNumber(product_id, quantity, itemPrice)
+			cartCounter()
+		}
 	}
+
 	if (positionClick.classList.contains('minus')) {
 		const product_id =
 			positionClick.parentElement.parentElement.parentElement.dataset.id
 		const positionThisProductInCart = carts.findIndex(
 			(value) => value.product_id === product_id,
 		)
-		carts[positionThisProductInCart].quantity--
-		const quantity = carts[positionThisProductInCart].quantity
-		updateQuantityNumber(product_id, quantity)
-		cartCounter()
+
+		if (positionThisProductInCart >= 0) {
+			const quantity = carts[positionThisProductInCart].quantity
+
+			if (quantity > 1) {
+				carts[positionThisProductInCart].quantity--
+
+				// Obtener el precio del ítem
+				const data = await fetchTopSellers()
+				const item = data.find((item) => item.id === product_id)
+				const itemPrice = item.price
+
+				// Calcular el precio total del ítem y actualizar en el carrito
+				totalPerItem = quantity * itemPrice
+				updateQuantityNumber(product_id, quantity - 1, itemPrice) // Pasar quantity - 1 como nueva cantidad
+				cartCounter()
+			} else {
+				// Si la cantidad es 1, podrías optar por eliminar el ítem del carrito o mostrar un mensaje, dependiendo de tu lógica de negocio
+				console.log('La cantidad mínima alcanzada')
+			}
+		}
 	}
 })
