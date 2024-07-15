@@ -257,10 +257,15 @@ const addToCart = async (product_id) => {
 				product_id: product_id,
 				quantity: 1,
 			})
+			await renderCart(product_id)
 		} else {
 			carts[positionThisProductInCart].quantity++
+			updateQuantityNumber(
+				product_id,
+				carts[positionThisProductInCart].quantity,
+			)
 		}
-		await renderCart(product_id)
+
 		cartCounter()
 	} catch (error) {
 		console.log(error)
