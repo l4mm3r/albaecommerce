@@ -240,14 +240,27 @@ const cartCounter = () => {
 	cartCounter.textContent = quantity
 }
 //asigna el span para pasarle la cantidad
-const updateQuantityNumber = async (product_id, quantity, price) => {
+const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
 	if (cartItem) {
 		cartItem.querySelector('.quantityNumber').textContent = quantity
 
-		if (price) {
+		if (itemPrice) {
 			const totalPriceElement = cartItem.querySelector('.totalPrice p')
-			totalPriceElement.textContent = (quantity * totalPerItem).toFixed(2)
+			totalPriceElement.textContent = (quantity * itemPrice).toFixed(2)
+			totalPerItem = totalPriceElement.textContent
+		}
+	}
+}
+
+const updateQuantityNumberRest = async (product_id, quantity, itemPrice) => {
+	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
+	if (cartItem) {
+		cartItem.querySelector('.quantityNumber').textContent = quantity
+		if (itemPrice) {
+			const totalPriceElement = cartItem.querySelector('.totalPrice p')
+			totalPriceElement.textContent = (totalPerItem - itemPrice).toFixed(2)
+			totalPerItem = totalPriceElement.textContent
 		}
 	}
 }
@@ -412,9 +425,7 @@ updateQuantity.addEventListener('click', async (event) => {
 				const item = data.find((item) => item.id === product_id)
 				const itemPrice = item.price
 
-				// Calcular el precio total del ítem y actualizar en el carrito
-				totalPerItem = quantity * itemPrice
-				updateQuantityNumber(product_id, quantity - 1, itemPrice) // Pasar quantity - 1 como nueva cantidad
+				updateQuantityNumberRest(product_id, quantity - 1, itemPrice)
 				cartCounter()
 			} else {
 				// Si la cantidad es 1, podrías optar por eliminar el ítem del carrito o mostrar un mensaje, dependiendo de tu lógica de negocio
