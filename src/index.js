@@ -240,13 +240,15 @@ const cartCounter = () => {
 	cartCounter.textContent = quantity
 }
 //asigna el span para pasarle la cantidad
-const updateQuantityNumber = async (product_id, quantity) => {
+const updateQuantityNumber = async (product_id, quantity, price) => {
 	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
 	if (cartItem) {
 		cartItem.querySelector('.quantityNumber').textContent = quantity
 
-		const totalPriceElement = cartItem.querySelector('.totalPrice p')
-		totalPriceElement.textContent = (quantity * totalPerItem).toFixed(2)
+		if (price) {
+			const totalPriceElement = cartItem.querySelector('.totalPrice p')
+			totalPriceElement.textContent = (quantity * totalPerItem).toFixed(2)
+		}
 	}
 }
 
@@ -337,6 +339,8 @@ const createItemInCart = (item) => {
 		p3.className = 'text-xl font-bold'
 		p3.textContent = `${item.price}`
 
+		totalPerItem = item.price
+
 		div5.append(p3)
 		return div5
 	}
@@ -385,9 +389,6 @@ updateQuantity.addEventListener('click', async (event) => {
 			const data = await fetchTopSellers()
 			const item = data.find((item) => item.id === product_id)
 			const itemPrice = item.price
-
-			// Calcular el precio total del ítem y actualizar en el carrito
-			totalPerItem = quantity * itemPrice
 			updateQuantityNumber(product_id, quantity, itemPrice)
 			cartCounter()
 		}
