@@ -91,7 +91,10 @@ const createCard = (data, containerClass) => {
 	const h3 = createHeadingElement('font-bold text-2xl mt-3', data.name)
 	const p1 = createParagraphElement('text-base', data.size)
 	const p2 = createParagraphElement('text-base', data.scent)
-	const p3 = createParagraphElement('text-xl font-bold mt-2', data.price)
+	const p3 = createParagraphElement(
+		'text-xl font-bold mt-2',
+		`${'$ '}${data.price}`,
+	)
 	const footer = createFooterElement('flex justify-end')
 	const button = createButtonElement(
 		'bg-orange-400 px-2 rounded-full -mr-2 mt-3 text-gray-900 font-dm addToCart',
@@ -247,8 +250,9 @@ const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 
 		if (itemPrice) {
 			const totalPriceElement = cartItem.querySelector('.totalPrice p')
-			totalPriceElement.textContent = (quantity * itemPrice).toFixed(2)
-			totalPerItem = totalPriceElement.textContent
+			const totalPrice = (quantity * itemPrice).toFixed(2)
+			totalPriceElement.textContent = `$${totalPrice}`
+			totalPerItem = totalPrice
 		}
 	}
 }
@@ -259,8 +263,9 @@ const updateQuantityNumberRest = async (product_id, quantity, itemPrice) => {
 		cartItem.querySelector('.quantityNumber').textContent = quantity
 		if (itemPrice) {
 			const totalPriceElement = cartItem.querySelector('.totalPrice p')
-			totalPriceElement.textContent = (totalPerItem - itemPrice).toFixed(2)
-			totalPerItem = totalPriceElement.textContent
+			const totalPrice = (totalPerItem - itemPrice).toFixed(2)
+			totalPriceElement.textContent = `$${totalPrice}`
+			totalPerItem = totalPrice
 		}
 	}
 }
@@ -350,7 +355,7 @@ const createItemInCart = (item) => {
 
 		const p3 = document.createElement('p')
 		p3.className = 'text-xl font-bold'
-		p3.textContent = `${item.price}`
+		p3.textContent = `$ ${item.price}`
 
 		totalPerItem = item.price
 
