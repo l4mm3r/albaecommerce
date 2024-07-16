@@ -243,7 +243,7 @@ const cartCounter = () => {
 	const quantity = carts.reduce((acc, item) => acc + item.quantity, 0)
 	cartCounter.textContent = quantity
 }
-//asigna el span para pasarle la cantidad
+//asigna el span y hace la mutiplicación para mostrar el total por item
 const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
 	if (cartItem) {
@@ -252,8 +252,11 @@ const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 		if (itemPrice) {
 			const totalPriceElement = cartItem.querySelector('.totalPrice p')
 			const totalPrice = (quantity * itemPrice).toFixed(2)
-			totalPriceElement.textContent = `$${totalPrice}`
 			totalPerItem = totalPrice
+			console.log(totalPerItem)
+			totalPriceElement.textContent = `$ ${totalPrice}`
+			cartItem.dataset.totalPerItem = totalPrice
+			saveCartToLocalStorage()
 		}
 	}
 }
@@ -264,9 +267,13 @@ const updateQuantityNumberRest = async (product_id, quantity, itemPrice) => {
 		cartItem.querySelector('.quantityNumber').textContent = quantity
 		if (itemPrice) {
 			const totalPriceElement = cartItem.querySelector('.totalPrice p')
+			console.log(totalPerItem)
+			console.log(itemPrice)
 			const totalPrice = (totalPerItem - itemPrice).toFixed(2)
-			totalPriceElement.textContent = `$${totalPrice}`
 			totalPerItem = totalPrice
+			totalPriceElement.textContent = `$${totalPrice}`
+			cartItem.dataset.totalPerItem = totalPrice
+			saveCartToLocalStorage()
 		}
 	}
 }
@@ -312,6 +319,7 @@ const renderCart = async (product_id) => {
 		const data = await fetchTopSellers()
 		const item = data.find((item) => item.id === product_id)
 		createItemInCart(item)
+		saveCartToLocalStorage()
 	} catch (error) {
 		console.log(error)
 	}
@@ -323,6 +331,10 @@ const createItemInCart = (item) => {
 	const article = document.createElement('article')
 	article.dataset.id = `${item.id}`
 	article.className = 'itemRendered'
+
+	const cartItem = carts.find((value) => value.product_id === item.id)
+	const totalPerItem = (cartItem.quantity * item.price).toFixed(2)
+	article.dataset.totalPerItem = totalPerItem
 
 	const div = document.createElement('div')
 	div.className = 'cartItem flex mt-4'
@@ -356,9 +368,7 @@ const createItemInCart = (item) => {
 
 		const p3 = document.createElement('p')
 		p3.className = 'text-xl font-bold'
-		p3.textContent = `$ ${item.price}`
-
-		totalPerItem = item.price
+		p3.textContent = `$ ${totalPerItem}`
 
 		div5.append(p3)
 		return div5
@@ -434,7 +444,6 @@ updateQuantity.addEventListener('click', async (event) => {
 				updateQuantityNumberRest(product_id, quantity - 1, itemPrice)
 				cartCounter()
 			} else {
-				// Si la cantidad es 1, podrías optar por eliminar el ítem del carrito o mostrar un mensaje, dependiendo de tu lógica de negocio
 				console.log('La cantidad mínima alcanzada')
 			}
 		}
@@ -453,5 +462,50 @@ clearCart.addEventListener('click', (event) => {
 const emptyCart = () => {
 	carts = []
 	document.querySelector('.listCart').innerHTML = ''
+	saveCartToLocalStorage()
 	cartCounter()
 }
+
+// Función para guardar el carrito en localStorage
+const saveCartToLocalStorage = () => {
+	localStorage.setItem('shoppingCart', JSON.stringify(carts))
+
+	const totalPerItemArray = []
+	document.querySelectorAll('.listCart .itemRendered').forEach((item) => {
+		const productId = item.dataset.id
+		const totalPerItem = item.dataset.totalPerItem || '0.00'
+		totalPerItemArray.push({ productId, totalPerItem })
+	})
+
+	localStorage.setItem('totalPerItemArray', JSON.stringify(totalPerItemArray))
+}
+// Función para cargar el carrito desde localStorage al cargar la página
+const loadCartFromLocalStorage = () => {
+	const savedCart = localStorage.getItem('shoppingCart')
+
+	if (savedCart) {
+		carts = JSON.parse(savedCart)
+		carts.forEach((item) => {
+			renderCart(item.product_id)
+		})
+	}
+
+	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
+	if (savedTotalPerItemArray) {
+		const totalPerItemArray = JSON.parse(savedTotalPerItemArray)
+		totalPerItemArray.forEach((item) => {
+			const cartItem = document.querySelector(
+				`.listCart [data-id="${item.productId}"]`,
+			)
+			if (cartItem) {
+				cartItem.dataset.totalPerItem = item.totalPerItem
+			}
+		})
+	}
+
+	cartCounter()
+	console.log('carrito cargado desde el local storage')
+}
+
+// Cargar el carrito desde localStorage al cargar la página
+loadCartFromLocalStorage()
