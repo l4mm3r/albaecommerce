@@ -253,7 +253,6 @@ const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 			const totalPriceElement = cartItem.querySelector('.totalPrice p')
 			const totalPrice = (quantity * itemPrice).toFixed(2)
 			totalPerItem = totalPrice
-			console.log(totalPerItem)
 			totalPriceElement.textContent = `$ ${totalPrice}`
 			cartItem.dataset.totalPerItem = totalPrice
 			saveCartToLocalStorage()
@@ -264,16 +263,14 @@ const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 const updateQuantityNumberRest = async (product_id, quantity, itemPrice) => {
 	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
 	if (cartItem) {
+		const totalPriceElement = cartItem.querySelector('.totalPrice p')
 		cartItem.querySelector('.quantityNumber').textContent = quantity
 		if (itemPrice) {
-			const totalPriceElement = cartItem.querySelector('.totalPrice p')
-			console.log(totalPerItem)
-			console.log(itemPrice)
-			const totalPrice = (totalPerItem - itemPrice).toFixed(2)
-			totalPerItem = totalPrice
+			const totalPrice = (quantity * itemPrice).toFixed(2)
 			totalPriceElement.textContent = `$${totalPrice}`
 			cartItem.dataset.totalPerItem = totalPrice
 			saveCartToLocalStorage()
+			console.log(carts)
 		}
 	}
 }
@@ -301,11 +298,7 @@ const addToCart = async (product_id) => {
 			})
 			await renderCart(product_id)
 		} else {
-			carts[positionThisProductInCart].quantity++
-			updateQuantityNumber(
-				product_id,
-				carts[positionThisProductInCart].quantity,
-			)
+			alert('El item ya existe en el carrito')
 		}
 		cartCounter()
 	} catch (error) {
@@ -319,7 +312,6 @@ const renderCart = async (product_id) => {
 		const data = await fetchTopSellers()
 		const item = data.find((item) => item.id === product_id)
 		createItemInCart(item)
-		saveCartToLocalStorage()
 	} catch (error) {
 		console.log(error)
 	}
@@ -479,20 +471,19 @@ const saveCartToLocalStorage = () => {
 
 	localStorage.setItem('totalPerItemArray', JSON.stringify(totalPerItemArray))
 }
+
 // Función para cargar el carrito desde localStorage al cargar la página
 const loadCartFromLocalStorage = () => {
 	const savedCart = localStorage.getItem('shoppingCart')
+	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
 
 	if (savedCart) {
 		carts = JSON.parse(savedCart)
-		for (const item of carts) {
-			renderCart(item.product_id)
-		}
 	}
 
-	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
 	if (savedTotalPerItemArray) {
 		const totalPerItemArray = JSON.parse(savedTotalPerItemArray)
+
 		for (const item of totalPerItemArray) {
 			const cartItem = document.querySelector(
 				`.listCart [data-id="${item.productId}"]`,
@@ -501,6 +492,10 @@ const loadCartFromLocalStorage = () => {
 				cartItem.dataset.totalPerItem = item.totalPerItem
 			}
 		}
+	}
+
+	for (const item of carts) {
+		renderCart(item.product_id)
 	}
 
 	cartCounter()
