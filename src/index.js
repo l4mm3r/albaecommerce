@@ -198,9 +198,9 @@ const createButtonElement = (className, textContent) => {
 }
 
 const appendElements = (parent, ...children) => {
-	children.forEach((child) => {
+	for (const child of children) {
 		parent.append(child)
-	})
+	}
 }
 
 const printTopCards = async () => {
@@ -471,11 +471,11 @@ const saveCartToLocalStorage = () => {
 	localStorage.setItem('shoppingCart', JSON.stringify(carts))
 
 	const totalPerItemArray = []
-	document.querySelectorAll('.listCart .itemRendered').forEach((item) => {
+	for (const item of document.querySelectorAll('.listCart .itemRendered')) {
 		const productId = item.dataset.id
 		const totalPerItem = item.dataset.totalPerItem || '0.00'
 		totalPerItemArray.push({ productId, totalPerItem })
-	})
+	}
 
 	localStorage.setItem('totalPerItemArray', JSON.stringify(totalPerItemArray))
 }
@@ -485,22 +485,22 @@ const loadCartFromLocalStorage = () => {
 
 	if (savedCart) {
 		carts = JSON.parse(savedCart)
-		carts.forEach((item) => {
+		for (const item of carts) {
 			renderCart(item.product_id)
-		})
+		}
 	}
 
 	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
 	if (savedTotalPerItemArray) {
 		const totalPerItemArray = JSON.parse(savedTotalPerItemArray)
-		totalPerItemArray.forEach((item) => {
+		for (const item of totalPerItemArray) {
 			const cartItem = document.querySelector(
 				`.listCart [data-id="${item.productId}"]`,
 			)
 			if (cartItem) {
 				cartItem.dataset.totalPerItem = item.totalPerItem
 			}
-		})
+		}
 	}
 
 	cartCounter()
