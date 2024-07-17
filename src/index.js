@@ -247,30 +247,10 @@ const cartCounter = () => {
 const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
 	if (cartItem) {
+		const totalPriceElement = cartItem.querySelector('.totalPrice p')
 		cartItem.querySelector('.quantityNumber').textContent = quantity
-
 		if (itemPrice) {
-			const totalPriceElement = cartItem.querySelector('.totalPrice p')
 			const totalPrice = (quantity * itemPrice).toFixed(2)
-			totalPerItem = totalPrice
-			console.log(totalPerItem)
-			totalPriceElement.textContent = `$ ${totalPrice}`
-			cartItem.dataset.totalPerItem = totalPrice
-			saveCartToLocalStorage()
-		}
-	}
-}
-
-const updateQuantityNumberRest = async (product_id, quantity, itemPrice) => {
-	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
-	if (cartItem) {
-		cartItem.querySelector('.quantityNumber').textContent = quantity
-		if (itemPrice) {
-			const totalPriceElement = cartItem.querySelector('.totalPrice p')
-			console.log(totalPerItem)
-			console.log(itemPrice)
-			const totalPrice = (totalPerItem - itemPrice).toFixed(2)
-			totalPerItem = totalPrice
 			totalPriceElement.textContent = `$${totalPrice}`
 			cartItem.dataset.totalPerItem = totalPrice
 			saveCartToLocalStorage()
@@ -301,11 +281,7 @@ const addToCart = async (product_id) => {
 			})
 			await renderCart(product_id)
 		} else {
-			carts[positionThisProductInCart].quantity++
-			updateQuantityNumber(
-				product_id,
-				carts[positionThisProductInCart].quantity,
-			)
+			alert('El item ya existe en el carrito')
 		}
 		cartCounter()
 	} catch (error) {
@@ -318,15 +294,19 @@ const renderCart = async (product_id) => {
 	try {
 		const data = await fetchTopSellers()
 		const item = data.find((item) => item.id === product_id)
-		createItemInCart(item)
-		saveCartToLocalStorage()
+		const cartItem = carts.find(
+			(cartItem) => cartItem.product_id === product_id,
+		)
+		const quantity = cartItem.quantity
+
+		createItemInCart(item, quantity)
 	} catch (error) {
 		console.log(error)
 	}
 }
 
 //función para crear la card del item en el carrito
-const createItemInCart = (item) => {
+const createItemInCart = (item, quantity) => {
 	// Create elements for the cart item
 	const article = document.createElement('article')
 	article.dataset.id = `${item.id}`
@@ -382,7 +362,7 @@ const createItemInCart = (item) => {
 	span1.textContent = '-'
 	const span2 = document.createElement('span')
 	span2.className = 'quantityNumber'
-	span2.textContent = `${carts[0].quantity}`
+	span2.textContent = `${quantity}`
 
 	const span3 = document.createElement('span')
 	span3.className = 'plus cursor-pointer'
@@ -441,7 +421,7 @@ updateQuantity.addEventListener('click', async (event) => {
 				const item = data.find((item) => item.id === product_id)
 				const itemPrice = item.price
 
-				updateQuantityNumberRest(product_id, quantity - 1, itemPrice)
+				updateQuantityNumber(product_id, quantity - 1, itemPrice)
 				cartCounter()
 			} else {
 				console.log('La cantidad mínima alcanzada')
@@ -479,20 +459,19 @@ const saveCartToLocalStorage = () => {
 
 	localStorage.setItem('totalPerItemArray', JSON.stringify(totalPerItemArray))
 }
+
 // Función para cargar el carrito desde localStorage al cargar la página
 const loadCartFromLocalStorage = () => {
 	const savedCart = localStorage.getItem('shoppingCart')
+	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
 
 	if (savedCart) {
 		carts = JSON.parse(savedCart)
-		for (const item of carts) {
-			renderCart(item.product_id)
-		}
 	}
 
-	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
 	if (savedTotalPerItemArray) {
 		const totalPerItemArray = JSON.parse(savedTotalPerItemArray)
+
 		for (const item of totalPerItemArray) {
 			const cartItem = document.querySelector(
 				`.listCart [data-id="${item.productId}"]`,
@@ -501,6 +480,10 @@ const loadCartFromLocalStorage = () => {
 				cartItem.dataset.totalPerItem = item.totalPerItem
 			}
 		}
+	}
+
+	for (const item of carts) {
+		renderCart(item.product_id)
 	}
 
 	cartCounter()
