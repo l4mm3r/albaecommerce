@@ -247,22 +247,6 @@ const cartCounter = () => {
 const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
 	if (cartItem) {
-		cartItem.querySelector('.quantityNumber').textContent = quantity
-
-		if (itemPrice) {
-			const totalPriceElement = cartItem.querySelector('.totalPrice p')
-			const totalPrice = (quantity * itemPrice).toFixed(2)
-			totalPerItem = totalPrice
-			totalPriceElement.textContent = `$ ${totalPrice}`
-			cartItem.dataset.totalPerItem = totalPrice
-			saveCartToLocalStorage()
-		}
-	}
-}
-
-const updateQuantityNumberRest = async (product_id, quantity, itemPrice) => {
-	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
-	if (cartItem) {
 		const totalPriceElement = cartItem.querySelector('.totalPrice p')
 		cartItem.querySelector('.quantityNumber').textContent = quantity
 		if (itemPrice) {
@@ -270,7 +254,6 @@ const updateQuantityNumberRest = async (product_id, quantity, itemPrice) => {
 			totalPriceElement.textContent = `$${totalPrice}`
 			cartItem.dataset.totalPerItem = totalPrice
 			saveCartToLocalStorage()
-			console.log(carts)
 		}
 	}
 }
@@ -311,14 +294,19 @@ const renderCart = async (product_id) => {
 	try {
 		const data = await fetchTopSellers()
 		const item = data.find((item) => item.id === product_id)
-		createItemInCart(item)
+		const cartItem = carts.find(
+			(cartItem) => cartItem.product_id === product_id,
+		)
+		const quantity = cartItem.quantity
+
+		createItemInCart(item, quantity)
 	} catch (error) {
 		console.log(error)
 	}
 }
 
 //función para crear la card del item en el carrito
-const createItemInCart = (item) => {
+const createItemInCart = (item, quantity) => {
 	// Create elements for the cart item
 	const article = document.createElement('article')
 	article.dataset.id = `${item.id}`
@@ -374,7 +362,7 @@ const createItemInCart = (item) => {
 	span1.textContent = '-'
 	const span2 = document.createElement('span')
 	span2.className = 'quantityNumber'
-	span2.textContent = `${carts[0].quantity}`
+	span2.textContent = `${quantity}`
 
 	const span3 = document.createElement('span')
 	span3.className = 'plus cursor-pointer'
@@ -433,7 +421,7 @@ updateQuantity.addEventListener('click', async (event) => {
 				const item = data.find((item) => item.id === product_id)
 				const itemPrice = item.price
 
-				updateQuantityNumberRest(product_id, quantity - 1, itemPrice)
+				updateQuantityNumber(product_id, quantity - 1, itemPrice)
 				cartCounter()
 			} else {
 				console.log('La cantidad mínima alcanzada')
