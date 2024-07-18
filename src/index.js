@@ -273,13 +273,16 @@ const addToCart = async (product_id) => {
 		const positionThisProductInCart = carts.findIndex(
 			(value) => value.product_id === product_id,
 		)
-
 		if (positionThisProductInCart < 0) {
-			carts.push({
-				product_id: product_id,
-				quantity: 1,
-			})
-			await renderCart(product_id)
+			if (window.confirm('Do you really want to add this item to cart?')) {
+				carts.push({
+					product_id: product_id,
+					quantity: 1,
+				})
+				await renderCart(product_id)
+				cartCounter()
+				return
+		}	
 		} else {
 			alert('El item ya existe en el carrito')
 		}
@@ -298,7 +301,7 @@ const renderCart = async (product_id) => {
 			(cartItem) => cartItem.product_id === product_id,
 		)
 		const quantity = cartItem.quantity
-
+		saveCartToLocalStorage()
 		createItemInCart(item, quantity)
 	} catch (error) {
 		console.log(error)
