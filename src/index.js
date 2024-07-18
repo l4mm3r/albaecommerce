@@ -235,7 +235,6 @@ const listProducts = document.querySelector('.topSellerContainer')
 const updateQuantity = document.querySelector('.listCart')
 const clearCart = document.querySelector('.clearCarTab')
 let carts = []
-let totalPerItem = 0
 
 //funcion para mostrar la cantidad de items totales en el carrito en la barra de navegacion
 const cartCounter = () => {
@@ -282,7 +281,7 @@ const addToCart = async (product_id) => {
 				await renderCart(product_id)
 				cartCounter()
 				return
-		}	
+			}
 		} else {
 			alert('El item ya existe en el carrito')
 		}
