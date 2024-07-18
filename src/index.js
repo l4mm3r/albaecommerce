@@ -1,5 +1,5 @@
-const url = './json/topSellers.json'
-const url2 = './json/allItems.json'
+const url = './src/json/topSellers.json'
+const url2 = './src/json/allItems.json'
 const topSellersList = document.querySelector('.topSellerContainer')
 
 document.addEventListener('DOMContentLoaded', async () => {

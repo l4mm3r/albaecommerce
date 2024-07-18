@@ -1,7 +1,7 @@
 [
 	{
 		"id": "1",
-		"img": "./assets/img/cardimg.png",
+		"img": "./src/assets/img/cardimg.png",
 		"name": "RED VELVET",
 		"size": "180ml",
 		"scent": "Red berry",
@@ -9,7 +9,7 @@
 	},
 	{
 		"id": "2",
-		"img": "./assets/img/cardimg2.png",
+		"img": "./src/assets/img/cardimg2.png",
 		"name": "OAKMOSS",
 		"size": "100ml",
 		"scent": "Red Wood",
@@ -17,7 +17,7 @@
 	},
 	{
 		"id": "3",
-		"img": "./assets/img/cardimg3.jpg",
+		"img": "./src/assets/img/cardimg3.jpg",
 		"name": "CHAMOIS",
 		"size": "150ml",
 		"scent": "Mint Leaf",
