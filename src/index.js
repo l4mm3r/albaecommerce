@@ -236,27 +236,6 @@ const updateQuantity = document.querySelector('.listCart')
 const clearCart = document.querySelector('.clearCarTab')
 let carts = []
 
-//funcion para mostrar la cantidad de items totales en el carrito en la barra de navegacion
-const cartCounter = () => {
-	const cartCounter = document.querySelector('.cartCounter')
-	const quantity = carts.reduce((acc, item) => acc + item.quantity, 0)
-	cartCounter.textContent = quantity
-}
-//asigna el span y hace la mutiplicación para mostrar el total por item
-const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
-	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
-	if (cartItem) {
-		const totalPriceElement = cartItem.querySelector('.totalPrice p')
-		cartItem.querySelector('.quantityNumber').textContent = quantity
-		if (itemPrice) {
-			const totalPrice = (quantity * itemPrice).toFixed(2)
-			totalPriceElement.textContent = `$${totalPrice}`
-			cartItem.dataset.totalPerItem = totalPrice
-			saveCartToLocalStorage()
-		}
-	}
-}
-
 //evento para escuchar cuando hacen click en addtocart
 listProducts.addEventListener('click', (event) => {
 	const positionClick = event.target
@@ -265,6 +244,13 @@ listProducts.addEventListener('click', (event) => {
 		addToCart(product_id)
 	}
 })
+
+//funcion para mostrar la cantidad de items totales en el carrito en la barra de navegacion
+const cartCounter = () => {
+	const cartCounter = document.querySelector('.cartCounter')
+	const quantity = carts.reduce((acc, item) => acc + item.quantity, 0)
+	cartCounter.textContent = quantity
+}
 
 //funcion para checkear si existe un item con el mismo id en el carrito
 const addToCart = async (product_id) => {
@@ -280,6 +266,7 @@ const addToCart = async (product_id) => {
 				})
 				await renderCart(product_id)
 				cartCounter()
+				updateSubtotal()
 				return
 			}
 		} else {
@@ -432,11 +419,40 @@ updateQuantity.addEventListener('click', async (event) => {
 	}
 })
 
+//asigna el span y hace la mutiplicación para mostrar el total por item
+const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
+	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
+	if (cartItem) {
+		const totalPriceElement = cartItem.querySelector('.totalPrice p')
+		cartItem.querySelector('.quantityNumber').textContent = quantity
+		if (itemPrice) {
+			const totalPrice = (quantity * itemPrice).toFixed(2)
+			totalPriceElement.textContent = `$${totalPrice}`
+			cartItem.dataset.totalPerItem = totalPrice
+			saveCartToLocalStorage()
+			updateSubtotal()
+		}
+	}
+}
+
+//funcion para actualizar el subtotal
+const updateSubtotal = () => {
+	const cartItems = document.querySelectorAll('.listCart .itemRendered') //se obtienen todos los items del carrito
+	let total = 0 //se resetea el subtotal para contarlo nuevamente
+	for (const item of cartItems) {
+		//se recorre el array del carrito y se obtiene el total por cada item
+		total += Number.parseFloat(item.dataset.totalPerItem) //se asigna el total por item y se va sumando en la variable total
+	}
+	const subtotal = document.querySelector('.subTotalValue') //se obtiene el span del subtotal
+	subtotal.textContent = `$ ${total.toFixed(2)}` //se actualiza el subtotal
+}
+
 //event para vaciar el carrito
 clearCart.addEventListener('click', (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('clearCarTab')) {
-		emptyCart()
+		//se escucha si se hace click en el boton clearCarTab
+		emptyCart() //se llama la funcion para vaciar el carrito
 	}
 })
 
@@ -444,8 +460,9 @@ clearCart.addEventListener('click', (event) => {
 const emptyCart = () => {
 	carts = []
 	document.querySelector('.listCart').innerHTML = ''
-	saveCartToLocalStorage()
-	cartCounter()
+	updateSubtotal() //se borra el subtotal cuando se vacia el carrito
+	saveCartToLocalStorage() //se guardan los cambios
+	cartCounter() //se actualiza el contador en la barra de navegación
 }
 
 // Función para guardar el carrito en localStorage
