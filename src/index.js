@@ -267,6 +267,7 @@ const addToCart = async (product_id) => {
 				await renderCart(product_id)
 				cartCounter()
 				updateSubtotal()
+				updateTotal()
 				return
 			}
 		} else {
@@ -431,6 +432,7 @@ const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
 			cartItem.dataset.totalPerItem = totalPrice
 			saveCartToLocalStorage()
 			updateSubtotal()
+			updateTotal()
 		}
 	}
 }
@@ -445,6 +447,23 @@ const updateSubtotal = () => {
 	}
 	const subtotal = document.querySelector('.subTotalValue') //se obtiene el span del subtotal
 	subtotal.textContent = `$ ${total.toFixed(2)}` //se actualiza el subtotal
+
+	localStorage.setItem('subtotal', total.toFixed(2))
+}
+
+const updateTotal = () => {
+	const cartItems = document.querySelectorAll('.listCart .itemRendered') //se obtienen todos los items del carrito
+	let total = 0 //se resetea el total para contarlo nuevamente
+	for (const item of cartItems) {
+		const totalPerItem = Number.parseFloat(item.dataset.totalPerItem) //se asigna el total por item y se va sumando en la variable total
+		total += totalPerItem
+	}
+	const totalWithTax = total * 1.12
+
+	const totalValue = document.querySelector('.cartTotalValue') //se obtiene el span del total
+	totalValue.textContent = `$ ${totalWithTax.toFixed(2)}` //se actualiza el total
+
+	localStorage.setItem('total', totalWithTax.toFixed(2))
 }
 
 //event para vaciar el carrito
@@ -461,6 +480,7 @@ const emptyCart = () => {
 	carts = []
 	document.querySelector('.listCart').innerHTML = ''
 	updateSubtotal() //se borra el subtotal cuando se vacia el carrito
+	updateTotal() //se borra el total cuando se vacia el carrito
 	saveCartToLocalStorage() //se guardan los cambios
 	cartCounter() //se actualiza el contador en la barra de navegación
 }
@@ -483,6 +503,8 @@ const saveCartToLocalStorage = () => {
 const loadCartFromLocalStorage = () => {
 	const savedCart = localStorage.getItem('shoppingCart')
 	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
+	const savedSubtotal = localStorage.getItem('subtotal')
+	const savedTotalWithTax = localStorage.getItem('total')
 
 	if (savedCart) {
 		carts = JSON.parse(savedCart)
@@ -503,6 +525,16 @@ const loadCartFromLocalStorage = () => {
 
 	for (const item of carts) {
 		renderCart(item.product_id)
+	}
+
+	if (savedSubtotal) {
+		const subtotal = document.querySelector('.subTotalValue')
+		subtotal.textContent = `$ ${Number.parseFloat(savedSubtotal).toFixed(2)}`
+	}
+
+	if (savedTotalWithTax) {
+		const totalValue = document.querySelector('.cartTotalValue')
+		totalValue.textContent = `$ ${Number.parseFloat(savedTotalWithTax).toFixed(2)}`
 	}
 
 	cartCounter()
