@@ -449,6 +449,7 @@ const updateSubtotal = () => {
 	subtotal.textContent = `$ ${total.toFixed(2)}` //se actualiza el subtotal
 
 	localStorage.setItem('subtotal', total.toFixed(2))
+	return total
 }
 
 const updateTotal = () => {
@@ -464,6 +465,7 @@ const updateTotal = () => {
 	totalValue.textContent = `$ ${totalWithTax.toFixed(2)}` //se actualiza el total
 
 	localStorage.setItem('total', totalWithTax.toFixed(2))
+	return totalWithTax
 }
 
 //event para vaciar el carrito
@@ -545,9 +547,13 @@ const loadCartFromLocalStorage = () => {
 loadCartFromLocalStorage()
 
 ///////////////////CHECKOUT MODAL////////////////////
+//TODO: adicionar condicional si no existe ningún item en el carrito
+
 const modalPopUp = document.querySelector('.proceedCarTab')
 const modalClose = document.querySelector('.closeModal')
+const continueToPayment = document.querySelector('.continueToPayment')
 
+//boton de checkout muestra el modal
 modalPopUp.addEventListener('click', (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('proceedCarTab')) {
@@ -559,6 +565,7 @@ modalPopUp.addEventListener('click', (event) => {
 	}
 })
 
+//boton cerrar modal de checkout
 modalClose.addEventListener('click', (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('closeModal')) {
@@ -566,3 +573,43 @@ modalClose.addEventListener('click', (event) => {
 		formCheckout.classList.toggle('hidden')
 	}
 })
+
+/////////////// CONFIRM PAYMENT MODAL //////////////////
+const modalPayment = document.querySelector('.confirmPayment')
+const closePayment = document.querySelector('.closePayment')
+
+continueToPayment.addEventListener('click', (event) => {
+	const positionClick = event.target
+	if (positionClick.classList.contains('continueToPayment')) {
+		const formCheckout = document.querySelector('.formPopUp')
+		//oculta el modal del formulario
+		formCheckout.classList.toggle('hidden')
+
+		//muestra el modal de confirmar pago
+		modalPayment.classList.toggle('hidden')
+		updatePricesDescription()
+	}
+})
+
+//boton de cerrar el modal de confirmar pago
+closePayment.addEventListener('click', (event) => {
+	const positionClick = event.target
+	if (positionClick.classList.contains('closePayment')) {
+		const paymentModal = document.querySelector('.confirmPayment')
+		paymentModal.classList.toggle('hidden')
+	}
+})
+
+//function to update prices description
+const updatePricesDescription = () => {
+	const subtotal = updateSubtotal()
+	const totalValue = updateTotal()
+
+	const subtotDescription = document.querySelector('.subtotalDescription')
+	const discountDescription = document.querySelector('.discountDescription')
+	const totalTotal = document.querySelector('.totalDescription')
+
+	subtotDescription.textContent = `R$ ${subtotal.toFixed(2)}`
+	discountDescription.textContent = '$0.00'
+	totalTotal.textContent = `R$ ${totalValue.toFixed(2)}`
+}
