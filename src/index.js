@@ -543,3 +543,17 @@ const loadCartFromLocalStorage = () => {
 
 // Cargar el carrito desde localStorage al cargar la página
 loadCartFromLocalStorage()
+
+///////////////////CHECKOUT MODAL////////////////////
+const modalPopUp = document.querySelector('.proceedCarTab')
+
+modalPopUp.addEventListener('click', (event) => {
+	const positionClick = event.target
+	if (positionClick.classList.contains('proceedCarTab')) {
+		const formCheckout = document.querySelector('.formPopUp')
+		formCheckout.classList.toggle('hidden')
+
+		const cartTab = document.querySelector('.cartTabContainer')
+		cartTab.style.display = cartTab.style.display === 'none' ? 'block' : 'none'
+	}
+})
