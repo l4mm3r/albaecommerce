@@ -546,6 +546,7 @@ loadCartFromLocalStorage()
 
 ///////////////////CHECKOUT MODAL////////////////////
 const modalPopUp = document.querySelector('.proceedCarTab')
+const modalClose = document.querySelector('.closeModal')
 
 modalPopUp.addEventListener('click', (event) => {
 	const positionClick = event.target
@@ -555,5 +556,13 @@ modalPopUp.addEventListener('click', (event) => {
 
 		const cartTab = document.querySelector('.cartTabContainer')
 		cartTab.style.display = cartTab.style.display === 'none' ? 'block' : 'none'
+	}
+})
+
+modalClose.addEventListener('click', (event) => {
+	const positionClick = event.target
+	if (positionClick.classList.contains('closeModal')) {
+		const formCheckout = document.querySelector('.formPopUp')
+		formCheckout.classList.toggle('hidden')
 	}
 })
