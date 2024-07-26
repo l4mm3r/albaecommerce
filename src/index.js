@@ -600,16 +600,37 @@ closePayment.addEventListener('click', (event) => {
 	}
 })
 
+//function apply discount code
+const applyDiscount = () => {
+	const discountCode = document.querySelector('.discountInput').value
+	if (discountCode !== 'DISCOUNT') {
+		return 0.0
+	} else {
+		return 10.0
+	}
+}
+
+//event listener para boton apply cupon code
+const applyDiscountCode = document.querySelector('.applyCode')
+applyDiscountCode.addEventListener('click', (event) => {
+	const positionClick = event.target
+	if (positionClick.classList.contains('applyCode')) {
+		const discountValue = applyDiscount()
+		updatePricesDescription(discountValue)
+	}
+})
+
 //function to update prices description
 const updatePricesDescription = () => {
-	const subtotal = updateSubtotal()
+	const subTotal = updateSubtotal()
 	const totalValue = updateTotal()
+	const discountCodePrice = applyDiscount()
 
 	const subtotDescription = document.querySelector('.subtotalDescription')
 	const discountDescription = document.querySelector('.discountDescription')
 	const totalTotal = document.querySelector('.totalDescription')
 
-	subtotDescription.textContent = `R$ ${subtotal.toFixed(2)}`
-	discountDescription.textContent = '$0.00'
-	totalTotal.textContent = `R$ ${totalValue.toFixed(2)}`
+	subtotDescription.textContent = `R$ ${subTotal.toFixed(2)}`
+	discountDescription.textContent = `R$ ${discountCodePrice.toFixed(2)}`
+	totalTotal.textContent = `R$ ${totalValue.toFixed(2) - discountCodePrice.toFixed(2)}`
 }
