@@ -784,6 +784,10 @@ video {
   height: 40%;
 }
 
+.h-24{
+  height: 6rem;
+}
+
 .h-28{
   height: 7rem;
 }
@@ -1094,6 +1098,10 @@ video {
   --tw-gradient-to: #f9fafb var(--tw-gradient-to-position);
 }
 
+.bg-cover{
+  background-size: cover;
+}
+
 .bg-clip-text{
   -webkit-background-clip: text;
           background-clip: text;
@@ -1284,13 +1292,13 @@ video {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
-.text-transparent{
-  color: transparent;
-}
-
 .text-red-500{
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.text-transparent{
+  color: transparent;
 }
 
 .opacity-20{
