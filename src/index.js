@@ -458,7 +458,7 @@ const updateQuantityNumber = async (productoId, quantity, itemPrice) => {
 		cartItem.querySelector('.quantityNumber').textContent = quantity
 		if (itemPrice) {
 			const totalPrice = (quantity * itemPrice).toFixed(2)
-			totalPriceElement.textContent = `$${totalPrice}`
+			totalPriceElement.textContent = `R$${totalPrice}`
 			cartItem.dataset.totalPerItem = totalPrice
 			saveCartToLocalStorage()
 			updateSubtotal()
@@ -476,7 +476,7 @@ const updateSubtotal = () => {
 		total += Number.parseFloat(item.dataset.totalPerItem) //se asigna el total por item y se va sumando en la variable total
 	}
 	const subtotal = document.querySelector('.subTotalValue') //se obtiene el span del subtotal
-	subtotal.textContent = `$ ${total.toFixed(2)}` //se actualiza el subtotal
+	subtotal.textContent = `R$ ${total.toFixed(2)}` //se actualiza el subtotal
 
 	localStorage.setItem('subtotal', total.toFixed(2))
 	return total
@@ -492,7 +492,7 @@ const updateTotal = () => {
 	const totalWithTax = total * 1.12
 
 	const totalValue = document.querySelector('.cartTotalValue') //se obtiene el span del total
-	totalValue.textContent = `$ ${totalWithTax.toFixed(2)}` //se actualiza el total
+	totalValue.textContent = `R$ ${totalWithTax.toFixed(2)}` //se actualiza el total
 
 	localStorage.setItem('total', totalWithTax.toFixed(2))
 	return totalWithTax
