@@ -247,8 +247,8 @@ let carts = []
 listProducts.addEventListener('click', (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('addToCart')) {
-		const product_id = positionClick.parentElement.parentElement.dataset.id
-		addToCart(product_id)
+		const productoId = positionClick.parentElement.parentElement.dataset.id
+		addToCart(productoId)
 	}
 })
 
@@ -260,23 +260,20 @@ const cartCounter = () => {
 }
 
 //funcion para checkear si existe un item con el mismo id en el carrito
-const addToCart = async (product_id) => {
+const addToCart = async (productoId) => {
 	try {
 		const positionThisProductInCart = carts.findIndex(
-			(value) => value.product_id === product_id,
+			(value) => value.productoId === productoId,
 		)
 		if (positionThisProductInCart < 0) {
-			if (window.confirm('Do you really want to add this item to cart?')) {
-				carts.push({
-					product_id: product_id,
-					quantity: 1,
-				})
-				await renderCart(product_id)
-				cartCounter()
-				updateSubtotal()
-				updateTotal()
-				return
-			}
+			carts.push({
+				productoId: productoId,
+				quantity: 1,
+			})
+			await renderCart(productoId)
+			cartCounter()
+			updateSubtotal()
+			updateTotal()
 		} else {
 			alert('El item ya existe en el carrito')
 		}
@@ -287,12 +284,12 @@ const addToCart = async (product_id) => {
 }
 
 //funcion para mostrar el item en el carrito por el id
-const renderCart = async (product_id) => {
+const renderCart = async (productoId) => {
 	try {
 		const data = await fetchTopSellers()
-		const item = data.find((item) => item.id === product_id)
+		const item = data.find((item) => item.id === productoId)
 		const cartItem = carts.find(
-			(cartItem) => cartItem.product_id === product_id,
+			(cartItem) => cartItem.productoId === productoId,
 		)
 		const quantity = cartItem.quantity
 		saveCartToLocalStorage()
@@ -309,7 +306,7 @@ const createItemInCart = (item, quantity) => {
 	article.dataset.id = `${item.id}`
 	article.className = 'itemRendered'
 
-	const cartItem = carts.find((value) => value.product_id === item.id)
+	const cartItem = carts.find((value) => value.productoId === item.id)
 	const totalPerItem = (cartItem.quantity * item.price).toFixed(2)
 	article.dataset.totalPerItem = totalPerItem
 
@@ -381,10 +378,10 @@ updateQuantity.addEventListener('click', async (event) => {
 	const positionClick = event.target
 
 	if (positionClick.classList.contains('plus')) {
-		const product_id =
+		const productoId =
 			positionClick.parentElement.parentElement.parentElement.dataset.id
 		const positionThisProductInCart = carts.findIndex(
-			(value) => value.product_id === product_id,
+			(value) => value.productoId === productoId,
 		)
 
 		if (positionThisProductInCart >= 0) {
@@ -393,18 +390,18 @@ updateQuantity.addEventListener('click', async (event) => {
 
 			// Obtener el precio del ítem
 			const data = await fetchTopSellers()
-			const item = data.find((item) => item.id === product_id)
+			const item = data.find((item) => item.id === productoId)
 			const itemPrice = item.price
-			updateQuantityNumber(product_id, quantity, itemPrice)
+			updateQuantityNumber(productoId, quantity, itemPrice)
 			cartCounter()
 		}
 	}
 
 	if (positionClick.classList.contains('minus')) {
-		const product_id =
+		const productoId =
 			positionClick.parentElement.parentElement.parentElement.dataset.id
 		const positionThisProductInCart = carts.findIndex(
-			(value) => value.product_id === product_id,
+			(value) => value.productoId === productoId,
 		)
 
 		if (positionThisProductInCart >= 0) {
@@ -415,10 +412,10 @@ updateQuantity.addEventListener('click', async (event) => {
 
 				// Obtener el precio del ítem
 				const data = await fetchTopSellers()
-				const item = data.find((item) => item.id === product_id)
+				const item = data.find((item) => item.id === productoId)
 				const itemPrice = item.price
 
-				updateQuantityNumber(product_id, quantity - 1, itemPrice)
+				updateQuantityNumber(productoId, quantity - 1, itemPrice)
 				cartCounter()
 			} else {
 				console.log('La cantidad mínima alcanzada')
@@ -428,8 +425,8 @@ updateQuantity.addEventListener('click', async (event) => {
 })
 
 //asigna el span y hace la mutiplicación para mostrar el total por item
-const updateQuantityNumber = async (product_id, quantity, itemPrice) => {
-	const cartItem = document.querySelector(`.listCart [data-id="${product_id}"]`)
+const updateQuantityNumber = async (productoId, quantity, itemPrice) => {
+	const cartItem = document.querySelector(`.listCart [data-id="${productoId}"]`)
 	if (cartItem) {
 		const totalPriceElement = cartItem.querySelector('.totalPrice p')
 		cartItem.querySelector('.quantityNumber').textContent = quantity
@@ -533,7 +530,7 @@ const loadCartFromLocalStorage = () => {
 	}
 
 	for (const item of carts) {
-		renderCart(item.product_id)
+		renderCart(item.productoId)
 	}
 
 	if (savedSubtotal) {
