@@ -544,15 +544,12 @@ const loadCartFromLocalStorage = () => {
 	}
 
 	cartCounter()
-	console.log('carrito cargado desde el local storage')
 }
 
 // Cargar el carrito desde localStorage al cargar la página
 loadCartFromLocalStorage()
 
 ///////////////////CHECKOUT MODAL////////////////////
-//TODO: adicionar condicional si no existe ningún item en el carrito
-
 const modalPopUp = document.querySelector('.proceedCarTab')
 const modalClose = document.querySelector('.closeModal')
 const continueToPayment = document.querySelector('.continueToPayment')
@@ -592,6 +589,7 @@ continueToPayment.addEventListener('click', (event) => {
 		//muestra el modal de confirmar pago
 		modalPayment.classList.toggle('hidden')
 		updatePricesDescription()
+		handlePayment()
 	}
 })
 
@@ -607,15 +605,14 @@ closePayment.addEventListener('click', (event) => {
 //function apply discount code
 const applyDiscount = () => {
 	const discountCode = document.querySelector('.discountInput').value
-	const validCode = 'coder' || 'CODER'
 	const discountValue = 10.0
 	const errorElement = document.querySelector('.promoCode span')
+	const validCodePattern = /^(coder|CODER)$/
 
-	if (discountCode === validCode) {
+	if (validCodePattern.test(discountCode)) {
 		if (errorElement) {
 			errorElement.innerText = ''
 		}
-		console.log(discountValue)
 		return discountValue
 	} else {
 		errorDiscount()
@@ -668,18 +665,25 @@ const updatePricesDescription = () => {
 }
 
 //oculta el modal anterior y muestra otro agradeciendo por la compra
-const finishPayment = document.querySelector('.makePayment')
-finishPayment.addEventListener('click', (event) => {
-	const positionClick = event.target
-	if (positionClick.classList.contains('makePayment')) {
-		const paymentModal = document.querySelector('.confirmPayment')
-		paymentModal.classList.toggle('hidden')
+const handlePayment = () => {
+	const finishPayment = document.querySelector('.makePayment')
+	if (carts.length === 0) {
+		finishPayment.disabled = true
+	} else {
+		finishPayment.disabled = false
+		finishPayment.addEventListener('click', (event) => {
+			const positionClick = event.target
+			if (positionClick.classList.contains('makePayment')) {
+				const paymentModal = document.querySelector('.confirmPayment')
+				paymentModal.classList.toggle('hidden')
 
-		const purchasedComplete = document.querySelector('.purchasedCompleted')
-		purchasedComplete.classList.toggle('hidden')
+				const purchasedComplete = document.querySelector('.purchasedCompleted')
+				purchasedComplete.classList.toggle('hidden')
 
-		setTimeout(() => {
-			purchasedComplete.classList.toggle('hidden')
-		}, 2000)
+				setTimeout(() => {
+					purchasedComplete.classList.toggle('hidden')
+				}, 2000)
+			}
+		})
 	}
-})
+}
