@@ -98,7 +98,7 @@ const createCard = (data, containerClass) => {
 	const p2 = createParagraphElement('text-base', data.scent)
 	const p3 = createParagraphElement(
 		'text-xl font-bold mt-2',
-		`${'$ '}${data.price}`,
+		`${'R$ '}${data.price}`,
 	)
 	const footer = createFooterElement('flex justify-end')
 	const button = createButtonElement(
@@ -133,7 +133,10 @@ const createBigCard = (data) => {
 	const h3 = createHeadingElement('font-bold text-2xl mt-3', data.name)
 	const p1 = createParagraphElement('text-base', data.size)
 	const p2 = createParagraphElement('text-base', data.scent)
-	const p3 = createParagraphElement('text-xl font-bold mt-2', data.price)
+	const p3 = createParagraphElement(
+		'text-xl font-bold mt-2',
+		`${'R$ '} ${data.price}`,
+	)
 	const footer = createFooterElement('flex justify-end')
 	const button = createButtonElement(
 		'bg-orange-400 px-2 rounded-full -mr-2 mt-3 text-gray-900 font-dm addToCart',
@@ -239,18 +242,27 @@ const printAllCards = async () => {
 
 ///////////////////////// SIDE CART //////////////////////////
 const listProducts = document.querySelector('.topSellerContainer')
+const listAllProducs = document.querySelector('.allCardsContainer')
 const updateQuantity = document.querySelector('.listCart')
 const clearCart = document.querySelector('.clearCarTab')
 let carts = []
 
-//evento para escuchar cuando hacen click en addtocart
-listProducts.addEventListener('click', (event) => {
+//evento para escuchar cuando hacen click en addtocart topSellers
+const handleAddToCart = (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('addToCart')) {
 		const productoId = positionClick.parentElement.parentElement.dataset.id
 		addToCart(productoId)
 	}
-})
+}
+
+if (listProducts) {
+	listProducts.addEventListener('click', handleAddToCart)
+}
+
+if (listAllProducs) {
+	listAllProducs.addEventListener('click', handleAddToCart)
+}
 
 //funcion para mostrar la cantidad de items totales en el carrito en la barra de navegacion
 const cartCounter = () => {
@@ -275,7 +287,7 @@ const addToCart = async (productoId) => {
 			updateSubtotal()
 			updateTotal()
 		} else {
-			alert('El item ya existe en el carrito')
+			console.error(error)
 		}
 		cartCounter()
 	} catch (error) {
@@ -283,19 +295,25 @@ const addToCart = async (productoId) => {
 	}
 }
 
-//funcion para mostrar el item en el carrito por el id
+//funcion mostrar item en el carrito
 const renderCart = async (productoId) => {
 	try {
-		const data = await fetchTopSellers()
-		const item = data.find((item) => item.id === productoId)
+		const [topSellersData, allItemsData] = await Promise.all([
+			fetchTopSellers(),
+			fetchAllItems(),
+		]) //esperamos el fetch a los json y los combinamos en un solo array para buscar el id correspondiente
+		const combinedData = [...topSellersData, ...allItemsData]
+		const item = combinedData.find((item) => item.id === productoId)
+
 		const cartItem = carts.find(
 			(cartItem) => cartItem.productoId === productoId,
 		)
 		const quantity = cartItem.quantity
+
 		saveCartToLocalStorage()
 		createItemInCart(item, quantity)
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }
 

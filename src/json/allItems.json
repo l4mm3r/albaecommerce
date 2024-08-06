@@ -8,7 +8,7 @@
 		"name": "TENESSE",
 		"size": "100ml",
 		"scent": "CocoNut",
-		"price": "r$90,00"
+		"price": 85.0
 	},
 	{
 		"id": "5",
@@ -16,7 +16,7 @@
 		"name": "MOON",
 		"size": "100ml",
 		"scent": "Sweet Vanilla",
-		"price": "r$90,00"
+		"price": 75.0
 	},
 	{
 		"id": "6",
@@ -24,7 +24,7 @@
 		"name": "SPRAY",
 		"size": "250ml",
 		"scent": "Baby Rose",
-		"price": "r$90,00"
+		"price": 120.0
 	},
 	{
 		"id": "7",
@@ -32,7 +32,7 @@
 		"name": "PINKY",
 		"size": "100ml",
 		"scent": "Bubble Gum",
-		"price": "r$90,00"
+		"price": 89.0
 	},
 	{
 		"id": "8",
@@ -40,6 +40,6 @@
 		"name": "POCKET",
 		"size": "80ml",
 		"scent": "Watermelon",
-		"price": "r$90,00"
+		"price": 65.0
 	}
 ]
