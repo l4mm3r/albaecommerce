@@ -1414,6 +1414,11 @@ video {
   --tw-ring-color: rgb(234 88 12 / var(--tw-ring-opacity));
 }
 
+.disabled\:bg-orange-300:disabled{
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 186 116 / var(--tw-bg-opacity));
+}
+
 @media (min-width: 640px){
   .sm\:col-span-4{
     grid-column: span 4 / span 4;
