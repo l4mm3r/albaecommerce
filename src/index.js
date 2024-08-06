@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	}
 })
 
+//funcion para obtener los productos destacados
 const fetchTopSellers = async () => {
 	try {
 		const response = await fetch(urlTopSellers, {
@@ -22,11 +23,12 @@ const fetchTopSellers = async () => {
 		const data = await response.json()
 		return data
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		throw new Error('Failed to fetch top sellers')
 	}
 }
 
+//funcion para obtener todos los productos
 const fetchAllItems = async () => {
 	try {
 		const response = await fetch(urlAllItems, {
@@ -38,11 +40,12 @@ const fetchAllItems = async () => {
 		const data = await response.json()
 		return data
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		throw new Error('Failed to fetch on all items')
 	}
 }
 
+//funcion para mapear los productos destacados
 const mapTopSellers = async () => {
 	try {
 		const data = await fetchTopSellers()
@@ -55,11 +58,12 @@ const mapTopSellers = async () => {
 			price: item.price,
 		}))
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		throw new Error('Failed to map top sellers')
 	}
 }
 
+//funcion para mapear todos los productos
 const mapAllItems = async () => {
 	try {
 		const data = await fetchAllItems()
@@ -72,11 +76,12 @@ const mapAllItems = async () => {
 			price: item.price,
 		}))
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		throw new Error('Failed to map all items')
 	}
 }
 
+//crear cards
 const createCard = (data, containerClass) => {
 	const article = createArticleElement(
 		'w-64 h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-7',
@@ -203,6 +208,7 @@ const appendElements = (parent, ...children) => {
 	}
 }
 
+//crea las cards de los topSellers
 const printTopCards = async () => {
 	try {
 		const data = await mapTopSellers()
@@ -210,23 +216,24 @@ const printTopCards = async () => {
 			createCard(item, '.topSellerContainer')
 		}
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }
 
+//crea las cards de todos los productos
 const printAllCards = async () => {
 	try {
 		const data = await mapAllItems()
 		if (data.length > 0) {
 			createBigCard(data[0])
 		} else {
-			console.log('No data found')
+			console.error('No data found')
 		}
 		for (const item of data.slice(1)) {
 			createCard(item, '.allCardsContainer')
 		}
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }
 
@@ -275,7 +282,7 @@ const addToCart = async (product_id) => {
 		}
 		cartCounter()
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }
 
