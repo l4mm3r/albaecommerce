@@ -607,7 +607,7 @@ closePayment.addEventListener('click', (event) => {
 //function apply discount code
 const applyDiscount = () => {
 	const discountCode = document.querySelector('.discountInput').value
-	const validCode = 'DISCOUNT'
+	const validCode = 'coder' || 'CODER'
 	const discountValue = 10.0
 	const errorElement = document.querySelector('.promoCode span')
 
@@ -645,7 +645,13 @@ applyDiscountCode.addEventListener('click', (event) => {
 	const positionClick = event.target
 	if (positionClick.classList.contains('applyCode')) {
 		const discountValue = applyDiscount()
-		updatePricesDescription(discountValue)
+
+		const discountDescription = document.querySelector('.discountDescription')
+		const totalTotal = document.querySelector('.totalDescription')
+		discountDescription.textContent = `R$ ${discountValue.toFixed(2)}`
+
+		const totalValue = updateTotal()
+		totalTotal.textContent = `R$ ${(totalValue - discountValue).toFixed(2)}`
 	}
 })
 
@@ -655,12 +661,10 @@ const updatePricesDescription = () => {
 	const totalValue = updateTotal()
 
 	const subtotDescription = document.querySelector('.subtotalDescription')
-	const discountDescription = document.querySelector('.discountDescription')
 	const totalTotal = document.querySelector('.totalDescription')
 
 	subtotDescription.textContent = `R$ ${subTotal.toFixed(2)}`
-	discountDescription.textContent = `R$ ${discountCodePrice.toFixed(2)}`
-	totalTotal.textContent = `R$ ${totalValue.toFixed(2) - discountCodePrice.toFixed(2)}`
+	totalTotal.textContent = `R$ ${totalValue.toFixed(2)}`
 }
 
 //oculta el modal anterior y muestra otro agradeciendo por la compra
