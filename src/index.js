@@ -336,7 +336,7 @@ const createItemInCart = (item, quantity) => {
 
 	const img = document.createElement('img')
 	img.src = `${item.img}`
-	img.className = 'w-24 rounded-lg'
+	img.className = 'w-24 h-24 rounded-lg object-cover'
 
 	const div3 = document.createElement('div')
 	div3.className =
@@ -360,7 +360,7 @@ const createItemInCart = (item, quantity) => {
 
 		const p3 = document.createElement('p')
 		p3.className = 'text-xl font-bold'
-		p3.textContent = `$ ${totalPerItem}`
+		p3.textContent = `R$ ${totalPerItem}`
 
 		div5.append(p3)
 		return div5
@@ -407,8 +407,12 @@ updateQuantity.addEventListener('click', async (event) => {
 			const quantity = carts[positionThisProductInCart].quantity
 
 			// Obtener el precio del ítem
-			const data = await fetchTopSellers()
-			const item = data.find((item) => item.id === productoId)
+			const [topSellersData, allItemsData] = await Promise.all([
+				fetchTopSellers(),
+				fetchAllItems(),
+			]) //esperamos el fetch a los json y los combinamos en un solo array para buscar el id correspondiente
+			const combinedData = [...topSellersData, ...allItemsData]
+			const item = combinedData.find((item) => item.id === productoId)
 			const itemPrice = item.price
 			updateQuantityNumber(productoId, quantity, itemPrice)
 			cartCounter()
@@ -429,8 +433,12 @@ updateQuantity.addEventListener('click', async (event) => {
 				carts[positionThisProductInCart].quantity--
 
 				// Obtener el precio del ítem
-				const data = await fetchTopSellers()
-				const item = data.find((item) => item.id === productoId)
+				const [topSellersData, allItemsData] = await Promise.all([
+					fetchTopSellers(),
+					fetchAllItems(),
+				]) //esperamos el fetch a los json y los combinamos en un solo array para buscar el id correspondiente
+				const combinedData = [...topSellersData, ...allItemsData]
+				const item = combinedData.find((item) => item.id === productoId)
 				const itemPrice = item.price
 
 				updateQuantityNumber(productoId, quantity - 1, itemPrice)
