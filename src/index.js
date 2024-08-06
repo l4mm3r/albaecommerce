@@ -550,59 +550,43 @@ const loadCartFromLocalStorage = () => {
 loadCartFromLocalStorage()
 
 ///////////////////CHECKOUT MODAL////////////////////
+// Selectores
 const modalPopUp = document.querySelector('.proceedCarTab')
 const modalClose = document.querySelector('.closeModal')
 const continueToPayment = document.querySelector('.continueToPayment')
 
-//boton de checkout muestra el modal
+// cambiar visibilidad de un elemento
+const toggleVisibility = (element) => {
+	element.classList.toggle('hidden')
+}
+
+// cambiar estilo de display de un elemento
+const toggleDisplay = (element) => {
+	element.style.display = element.style.display === 'none' ? 'block' : 'none'
+}
+
+// Event listener para mostrar el modal de checkout
 modalPopUp.addEventListener('click', (event) => {
-	const positionClick = event.target
-	if (positionClick.classList.contains('proceedCarTab')) {
+	if (event.target.classList.contains('proceedCarTab')) {
 		const formCheckout = document.querySelector('.formPopUp')
-		formCheckout.classList.toggle('hidden')
+		toggleVisibility(formCheckout)
 
 		const cartTab = document.querySelector('.cartTabContainer')
-		cartTab.style.display = cartTab.style.display === 'none' ? 'block' : 'none'
+		toggleDisplay(cartTab)
 	}
 })
 
-//boton cerrar modal de checkout
+// Event listener para cerrar el checkout
 modalClose.addEventListener('click', (event) => {
-	const positionClick = event.target
-	if (positionClick.classList.contains('closeModal')) {
+	if (event.target.classList.contains('closeModal')) {
 		const formCheckout = document.querySelector('.formPopUp')
-		formCheckout.classList.toggle('hidden')
+		toggleVisibility(formCheckout)
 	}
 })
 
-/////////////// CONFIRM PAYMENT MODAL //////////////////
-const modalPayment = document.querySelector('.confirmPayment')
-const closePayment = document.querySelector('.closePayment')
-
-continueToPayment.addEventListener('click', (event) => {
-	const positionClick = event.target
-	if (positionClick.classList.contains('continueToPayment')) {
-		const formCheckout = document.querySelector('.formPopUp')
-		//oculta el modal del formulario
-		formCheckout.classList.toggle('hidden')
-
-		//muestra el modal de confirmar pago
-		modalPayment.classList.toggle('hidden')
-		updatePricesDescription()
-		handlePayment()
-	}
-})
-
-//boton de cerrar el modal de confirmar pago
-closePayment.addEventListener('click', (event) => {
-	const positionClick = event.target
-	if (positionClick.classList.contains('closePayment')) {
-		const paymentModal = document.querySelector('.confirmPayment')
-		paymentModal.classList.toggle('hidden')
-	}
-})
-
-//function apply discount code
+//////////PAYMENT MODAL////////////
+//funciones
+// aplicar descuento
 const applyDiscount = () => {
 	const discountCode = document.querySelector('.discountInput').value
 	const discountValue = 10.0
@@ -620,7 +604,7 @@ const applyDiscount = () => {
 	}
 }
 
-//funcion para error de cupon de descuento
+// mostrar error de descuento
 const errorDiscount = () => {
 	const promoCodeSection = document.querySelector('.promoCode')
 	const errorMessage = document.createElement('span')
@@ -636,23 +620,7 @@ const errorDiscount = () => {
 	promoCodeSection.appendChild(errorMessage)
 }
 
-//event listener para boton apply cupon code
-const applyDiscountCode = document.querySelector('.applyCode')
-applyDiscountCode.addEventListener('click', (event) => {
-	const positionClick = event.target
-	if (positionClick.classList.contains('applyCode')) {
-		const discountValue = applyDiscount()
-
-		const discountDescription = document.querySelector('.discountDescription')
-		const totalTotal = document.querySelector('.totalDescription')
-		discountDescription.textContent = `R$ ${discountValue.toFixed(2)}`
-
-		const totalValue = updateTotal()
-		totalTotal.textContent = `R$ ${(totalValue - discountValue).toFixed(2)}`
-	}
-})
-
-//function to update prices description
+// actualizar precios
 const updatePricesDescription = () => {
 	const subTotal = updateSubtotal()
 	const totalValue = updateTotal()
@@ -664,7 +632,7 @@ const updatePricesDescription = () => {
 	totalTotal.textContent = `R$ ${totalValue.toFixed(2)}`
 }
 
-//oculta el modal anterior y muestra otro agradeciendo por la compra
+// manejo proceso de pago
 const handlePayment = () => {
 	const finishPayment = document.querySelector('.makePayment')
 	if (carts.length === 0) {
@@ -672,8 +640,7 @@ const handlePayment = () => {
 	} else {
 		finishPayment.disabled = false
 		finishPayment.addEventListener('click', (event) => {
-			const positionClick = event.target
-			if (positionClick.classList.contains('makePayment')) {
+			if (event.target.classList.contains('makePayment')) {
 				const paymentModal = document.querySelector('.confirmPayment')
 				paymentModal.classList.toggle('hidden')
 
@@ -687,3 +654,41 @@ const handlePayment = () => {
 		})
 	}
 }
+
+// Event listeners
+// boton continuar al pago
+document
+	.querySelector('.continueToPayment')
+	.addEventListener('click', (event) => {
+		if (event.target.classList.contains('continueToPayment')) {
+			const formCheckout = document.querySelector('.formPopUp')
+			formCheckout.classList.toggle('hidden')
+
+			const modalPayment = document.querySelector('.confirmPayment')
+			modalPayment.classList.toggle('hidden')
+
+			updatePricesDescription()
+			handlePayment()
+		}
+	})
+
+// botn cerrar modal de pago
+document.querySelector('.closePayment').addEventListener('click', (event) => {
+	if (event.target.classList.contains('closePayment')) {
+		document.querySelector('.confirmPayment').classList.toggle('hidden')
+	}
+})
+
+// boton aplicar codigo de descuento
+document.querySelector('.applyCode').addEventListener('click', (event) => {
+	if (event.target.classList.contains('applyCode')) {
+		const discountValue = applyDiscount()
+
+		const discountDescription = document.querySelector('.discountDescription')
+		const totalTotal = document.querySelector('.totalDescription')
+		discountDescription.textContent = `R$ ${discountValue.toFixed(2)}`
+
+		const totalValue = updateTotal()
+		totalTotal.textContent = `R$ ${(totalValue - discountValue).toFixed(2)}`
+	}
+})
