@@ -14,14 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 //funcion para obtener los productos destacados
 const fetchTopSellers = async () => {
 	try {
-		const response = await fetch(urlTopSellers, {
-			method: 'GET',
+		const response = await axios.get(urlTopSellers, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
 		})
-		const data = await response.json()
-		return data
+		return response.data
 	} catch (error) {
 		console.error(error)
 		throw new Error('Failed to fetch top sellers')
@@ -31,14 +29,12 @@ const fetchTopSellers = async () => {
 //funcion para obtener todos los productos
 const fetchAllItems = async () => {
 	try {
-		const response = await fetch(urlAllItems, {
-			method: 'GET',
+		const response = await axios.get(urlAllItems, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
 		})
-		const data = await response.json()
-		return data
+		return response.data
 	} catch (error) {
 		console.error(error)
 		throw new Error('Failed to fetch on all items')
