@@ -425,11 +425,9 @@ updateQuantity.addEventListener('click', async (event) => {
 		const positionThisProductInCart = carts.findIndex(
 			(value) => value.productoId === productoId,
 		)
-
 		if (positionThisProductInCart >= 0) {
 			const quantity = carts[positionThisProductInCart].quantity
-
-			if (quantity > 1) {
+			if (quantity > 0) {
 				carts[positionThisProductInCart].quantity--
 
 				// Obtener el precio del ítem
@@ -442,9 +440,13 @@ updateQuantity.addEventListener('click', async (event) => {
 				const itemPrice = item.price
 
 				updateQuantityNumber(productoId, quantity - 1, itemPrice)
+
+				if (carts[positionThisProductInCart].quantity === 0) {
+					carts.splice(positionThisProductInCart, 1)
+					document.querySelector(`.listCart [data-id="${productoId}"]`).remove()
+				}
+				renderCart(productoId)
 				cartCounter()
-			} else {
-				console.log('La cantidad mínima alcanzada')
 			}
 		}
 	}
@@ -517,6 +519,7 @@ const emptyCart = () => {
 	cartCounter() //se actualiza el contador en la barra de navegación
 }
 
+////////////////// local storage //////////////////
 // Función para guardar el carrito en localStorage
 const saveCartToLocalStorage = () => {
 	const cartData = {
@@ -673,6 +676,9 @@ const handlePayment = () => {
 				setTimeout(() => {
 					purchasedComplete.classList.toggle('hidden')
 				}, 2000)
+
+				// vaciar carrito
+				emptyCart()
 			}
 		})
 	}
@@ -695,7 +701,7 @@ document
 		}
 	})
 
-// botn cerrar modal de pago
+// boton cerrar modal de pago
 document.querySelector('.closePayment').addEventListener('click', (event) => {
 	if (event.target.classList.contains('closePayment')) {
 		document.querySelector('.confirmPayment').classList.toggle('hidden')
