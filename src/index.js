@@ -634,9 +634,9 @@ const errorDiscount = () => {
 	// Eliminar cualquier mensaje de error existente
 	const existingErrorMessages =
 		promoCodeSection.querySelectorAll('.error-message')
-	existingErrorMessages.forEach((message) => {
+	for (const message of existingErrorMessages) {
 		message.remove()
-	})
+	}
 
 	const errorMessage = document.createElement('span')
 	errorMessage.textContent = 'Discount code invalid'
