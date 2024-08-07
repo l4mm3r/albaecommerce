@@ -444,6 +444,7 @@ updateQuantity.addEventListener('click', async (event) => {
 				if (carts[positionThisProductInCart].quantity === 0) {
 					carts.splice(positionThisProductInCart, 1)
 					document.querySelector(`.listCart [data-id="${productoId}"]`).remove()
+					saveCartToLocalStorage()
 				}
 				renderCart(productoId)
 				cartCounter()
@@ -560,12 +561,12 @@ const loadCartFromLocalStorage = () => {
 
 		if (savedSubtotal) {
 			const subtotal = document.querySelector('.subTotalValue')
-			subtotal.textContent = `$ ${Number.parseFloat(savedSubtotal).toFixed(2)}`
+			subtotal.textContent = `R$ ${Number.parseFloat(savedSubtotal).toFixed(2)}`
 		}
 
 		if (savedTotalWithTax) {
 			const totalValue = document.querySelector('.cartTotalValue')
-			totalValue.textContent = `$ ${Number.parseFloat(savedTotalWithTax).toFixed(2)}`
+			totalValue.textContent = `R$ ${Number.parseFloat(savedTotalWithTax).toFixed(2)}`
 		}
 
 		cartCounter()
