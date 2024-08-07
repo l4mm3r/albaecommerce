@@ -445,8 +445,8 @@ updateQuantity.addEventListener('click', async (event) => {
 					carts.splice(positionThisProductInCart, 1)
 					document.querySelector(`.listCart [data-id="${productoId}"]`).remove()
 					saveCartToLocalStorage()
+					renderCart(productoId)
 				}
-				renderCart(productoId)
 				cartCounter()
 			}
 		}
