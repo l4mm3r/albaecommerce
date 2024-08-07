@@ -519,33 +519,30 @@ const emptyCart = () => {
 
 // Función para guardar el carrito en localStorage
 const saveCartToLocalStorage = () => {
-	localStorage.setItem('shoppingCart', JSON.stringify(carts))
-
-	const totalPerItemArray = []
-	for (const item of document.querySelectorAll('.listCart .itemRendered')) {
-		const productId = item.dataset.id
-		const totalPerItem = item.dataset.totalPerItem || '0.00'
-		totalPerItemArray.push({ productId, totalPerItem })
+	const cartData = {
+		carts,
+		items: Array.from(document.querySelectorAll('.listCart .itemRendered')).map(
+			(item) => ({
+				productId: item.dataset.id,
+				totalPerItem: item.dataset.totalPerItem || '0.00',
+			}),
+		),
 	}
 
-	localStorage.setItem('totalPerItemArray', JSON.stringify(totalPerItemArray))
+	localStorage.setItem('shoppingCartData', JSON.stringify(cartData))
 }
 
-// Función para cargar el carrito desde localStorage al cargar la página
+// Función para cargar el carrito desde localStorage
 const loadCartFromLocalStorage = () => {
-	const savedCart = localStorage.getItem('shoppingCart')
-	const savedTotalPerItemArray = localStorage.getItem('totalPerItemArray')
-	const savedSubtotal = localStorage.getItem('subtotal')
-	const savedTotalWithTax = localStorage.getItem('total')
+	const savedCartData = localStorage.getItem('shoppingCartData')
 
-	if (savedCart) {
-		carts = JSON.parse(savedCart)
-	}
+	if (savedCartData) {
+		const { carts: savedCarts, items: savedItems } = JSON.parse(savedCartData)
+		const savedSubtotal = localStorage.getItem('subtotal')
+		const savedTotalWithTax = localStorage.getItem('total')
+		carts = savedCarts
 
-	if (savedTotalPerItemArray) {
-		const totalPerItemArray = JSON.parse(savedTotalPerItemArray)
-
-		for (const item of totalPerItemArray) {
+		for (const item of savedItems) {
 			const cartItem = document.querySelector(
 				`.listCart [data-id="${item.productId}"]`,
 			)
@@ -553,23 +550,23 @@ const loadCartFromLocalStorage = () => {
 				cartItem.dataset.totalPerItem = item.totalPerItem
 			}
 		}
-	}
 
-	for (const item of carts) {
-		renderCart(item.productoId)
-	}
+		for (const item of carts) {
+			renderCart(item.productoId)
+		}
 
-	if (savedSubtotal) {
-		const subtotal = document.querySelector('.subTotalValue')
-		subtotal.textContent = `$ ${Number.parseFloat(savedSubtotal).toFixed(2)}`
-	}
+		if (savedSubtotal) {
+			const subtotal = document.querySelector('.subTotalValue')
+			subtotal.textContent = `$ ${Number.parseFloat(savedSubtotal).toFixed(2)}`
+		}
 
-	if (savedTotalWithTax) {
-		const totalValue = document.querySelector('.cartTotalValue')
-		totalValue.textContent = `$ ${Number.parseFloat(savedTotalWithTax).toFixed(2)}`
-	}
+		if (savedTotalWithTax) {
+			const totalValue = document.querySelector('.cartTotalValue')
+			totalValue.textContent = `$ ${Number.parseFloat(savedTotalWithTax).toFixed(2)}`
+		}
 
-	cartCounter()
+		cartCounter()
+	}
 }
 
 // Cargar el carrito desde localStorage al cargar la página
