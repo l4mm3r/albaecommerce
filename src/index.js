@@ -112,7 +112,7 @@ const createCard = (data, containerClass) => {
 
 const createBigCard = (data) => {
 	const article = createArticleElement(
-		'w-[600px] h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-7',
+		'w-[578px] h-96 bg-gray-800 rounded-2xl drop-shadow-sm shadow-orange-300 hover:shadow-2xl mt-20 p-7',
 		data.id,
 	)
 	const header = createHeaderElement('flex justify-end')
