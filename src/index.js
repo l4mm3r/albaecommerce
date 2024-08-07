@@ -630,8 +630,15 @@ const applyDiscount = () => {
 // mostrar error de descuento
 const errorDiscount = () => {
 	const promoCodeSection = document.querySelector('.promoCode')
-	const errorMessage = document.createElement('span')
 
+	// Eliminar cualquier mensaje de error existente
+	const existingErrorMessages =
+		promoCodeSection.querySelectorAll('.error-message')
+	existingErrorMessages.forEach((message) => {
+		message.remove()
+	})
+
+	const errorMessage = document.createElement('span')
 	errorMessage.textContent = 'Discount code invalid'
 	errorMessage.classList.add(
 		'text-red-500',
@@ -639,6 +646,7 @@ const errorDiscount = () => {
 		'text-base',
 		'mt-1',
 		'weight-bold',
+		'error-message', // Agrega una clase para identificar el mensaje de error
 	)
 	promoCodeSection.appendChild(errorMessage)
 }
