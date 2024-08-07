@@ -1098,10 +1098,6 @@ video {
   --tw-gradient-to: #f9fafb var(--tw-gradient-to-position);
 }
 
-.bg-cover{
-  background-size: cover;
-}
-
 .bg-clip-text{
   -webkit-background-clip: text;
           background-clip: text;
