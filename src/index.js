@@ -664,32 +664,6 @@ const updatePricesDescription = () => {
 }
 
 // manejo proceso de pago
-const handlePayment = () => {
-	const finishPayment = document.querySelector('.makePayment')
-	if (carts.length === 0) {
-		finishPayment.disabled = true
-	} else {
-		finishPayment.disabled = false
-		finishPayment.addEventListener('click', (event) => {
-			if (event.target.classList.contains('makePayment')) {
-				const paymentModal = document.querySelector('.confirmPayment')
-				paymentModal.classList.toggle('hidden')
-
-				const purchasedComplete = document.querySelector('.purchasedCompleted')
-				purchasedComplete.classList.toggle('hidden')
-
-	setTimeout(() => purchasedComplete.classList.toggle('hidden'), 2000)
-
-	emptyCart()
-}
-
-const setButtonDisabled = (button, disabled) => {
-	button.disabled = disabled
-}
-
-const toggleHiddenPaymentModal () => {
-	
-}
 
 // Event listeners
 // boton continuar al pago
