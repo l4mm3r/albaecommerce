@@ -664,8 +664,6 @@ const updatePricesDescription = () => {
 }
 
 // manejo proceso de pago
-<<<<<<< HEAD
-=======
 const handlePayment = () => {
 	const finishPaymentButton = document.querySelector('.makePayment')
 
@@ -690,8 +688,6 @@ const handlePaymentClick = (event) => {
 const setButtonDisabled = (button, disabled) => {
 	button.disabled = disabled
 }
->>>>>>> refactor-handlePayment
-
 // Event listeners
 // boton continuar al pago
 document
