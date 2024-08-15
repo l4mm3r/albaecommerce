@@ -331,7 +331,7 @@ const createItemInCart = (item, quantity) => {
 	div2.className = 'itemImg'
 
 	const img = document.createElement('img')
-	img.src = `${item.img}`
+	img.src = `${item.img.foto1 === undefined ? item.img : item.img.foto1}`
 	img.className = 'w-24 h-24 rounded-lg object-cover'
 
 	const div3 = document.createElement('div')
