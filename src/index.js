@@ -669,7 +669,6 @@ const handlePayment = () => {
 	if (carts.length === 0) {
 		finishPayment.disabled = true
 	} else {
-		finishPayment.disabled = false
 		finishPayment.addEventListener('click', (event) => {
 			if (event.target.classList.contains('makePayment')) {
 				const paymentModal = document.querySelector('.confirmPayment')
@@ -687,6 +686,10 @@ const handlePayment = () => {
 			}
 		})
 	}
+}
+
+const toggleHiddenPaymentModal () => {
+	
 }
 
 // Event listeners
