@@ -331,7 +331,7 @@ const createItemInCart = (item, quantity) => {
 	div2.className = 'itemImg'
 
 	const img = document.createElement('img')
-	img.src = `${item.img}`
+	img.src = `${item.img.foto1 === undefined ? item.img : item.img.foto1}`
 	img.className = 'w-24 h-24 rounded-lg object-cover'
 
 	const div3 = document.createElement('div')
@@ -669,6 +669,7 @@ const handlePayment = () => {
 	if (carts.length === 0) {
 		finishPayment.disabled = true
 	} else {
+		finishPayment.disabled = false
 		finishPayment.addEventListener('click', (event) => {
 			if (event.target.classList.contains('makePayment')) {
 				const paymentModal = document.querySelector('.confirmPayment')
@@ -677,15 +678,13 @@ const handlePayment = () => {
 				const purchasedComplete = document.querySelector('.purchasedCompleted')
 				purchasedComplete.classList.toggle('hidden')
 
-				setTimeout(() => {
-					purchasedComplete.classList.toggle('hidden')
-				}, 2000)
+	setTimeout(() => purchasedComplete.classList.toggle('hidden'), 2000)
 
-				// vaciar carrito
-				emptyCart()
-			}
-		})
-	}
+	emptyCart()
+}
+
+const setButtonDisabled = (button, disabled) => {
+	button.disabled = disabled
 }
 
 const toggleHiddenPaymentModal () => {
