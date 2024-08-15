@@ -664,6 +664,33 @@ const updatePricesDescription = () => {
 }
 
 // manejo proceso de pago
+<<<<<<< HEAD
+=======
+const handlePayment = () => {
+	const finishPaymentButton = document.querySelector('.makePayment')
+
+	setButtonDisabled(finishPaymentButton, carts.length === 0)
+
+	finishPaymentButton.addEventListener('click', handlePaymentClick)
+}
+
+const handlePaymentClick = (event) => {
+	if (!event.target.classList.contains('makePayment')) return
+
+	const paymentModal = document.querySelector('.confirmPayment')
+	const purchasedComplete = document.querySelector('.purchasedCompleted')
+
+	paymentModal.classList.toggle('hidden')
+	purchasedComplete.classList.toggle('hidden')
+
+	setTimeout(() => purchasedComplete.classList.toggle('hidden'), 2000)
+	emptyCart()
+}
+
+const setButtonDisabled = (button, disabled) => {
+	button.disabled = disabled
+}
+>>>>>>> refactor-handlePayment
 
 // Event listeners
 // boton continuar al pago
