@@ -682,7 +682,6 @@ const handlePaymentClick = (event) => {
 	purchasedComplete.classList.toggle('hidden')
 
 	setTimeout(() => purchasedComplete.classList.toggle('hidden'), 2000)
-
 	emptyCart()
 }
 
