@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 		await printTopCards()
 		await printAllCards()
 	} catch (error) {
-		console.error(error)
+		handleError(error)
 	}
 })
 
@@ -21,8 +21,7 @@ const fetchTopSellers = async () => {
 		})
 		return response.data
 	} catch (error) {
-		console.error(error)
-		throw new Error('Failed to fetch top sellers')
+		handleError(error)
 	}
 }
 
@@ -36,8 +35,7 @@ const fetchAllItems = async () => {
 		})
 		return response.data
 	} catch (error) {
-		console.error(error)
-		throw new Error('Failed to fetch on all items')
+		handleError(error)
 	}
 }
 
@@ -54,8 +52,7 @@ const mapTopSellers = async () => {
 			price: item.price,
 		}))
 	} catch (error) {
-		console.error(error)
-		throw new Error('Failed to map top sellers')
+		handleError(error)
 	}
 }
 
@@ -72,8 +69,7 @@ const mapAllItems = async () => {
 			price: item.price,
 		}))
 	} catch (error) {
-		console.error(error)
-		throw new Error('Failed to map all items')
+		handleError(error)
 	}
 }
 
@@ -215,7 +211,7 @@ const printTopCards = async () => {
 			createCard(item, '.topSellerContainer')
 		}
 	} catch (error) {
-		console.error(error)
+		handleError(error)
 	}
 }
 
@@ -232,7 +228,7 @@ const printAllCards = async () => {
 			createCard(item, '.allCardsContainer')
 		}
 	} catch (error) {
-		console.error(error)
+		handleError(error)
 	}
 }
 
@@ -270,27 +266,43 @@ const cartCounter = () => {
 //funcion para checkear si existe un item con el mismo id en el carrito
 const addToCart = async (productoId) => {
 	try {
-		const positionThisProductInCart = carts.findIndex(
-			(value) => value.productoId === productoId,
-		)
-		if (positionThisProductInCart < 0) {
-			carts.push({
-				productoId: productoId,
-				quantity: 1,
-			})
-			await renderCart(productoId)
-			cartCounter()
-			updateSubtotal()
-			updateTotal()
-		} else {
-			console.error(error)
+		const productInCartIndex = findProductInCart(productoId)
+
+		if (productInCartIndex < 0) {
+			addNewProductToCart(productoId)
+			await updateCartDisplay(productoId)
 		}
-		cartCounter()
+
+		updateCartSummary()
 	} catch (error) {
-		console.error(error)
+		handleError(error)
 	}
 }
 
+const findProductInCart = (productoId) =>
+	carts.findIndex((product) => product.productoId === productoId)
+
+const addNewProductToCart = (productoId) => {
+	carts.push({
+		productoId,
+		quantity: 1,
+	})
+}
+
+const updateCartDisplay = async (productoId) => {
+	await renderCart(productoId)
+	cartCounter()
+	updateSubtotal()
+	updateTotal()
+}
+
+const handleError = (error) => {
+	console.error(error)
+}
+
+const updateCartSummary = () => {
+	cartCounter()
+}
 //funcion mostrar item en el carrito
 const renderCart = async (productoId) => {
 	try {
