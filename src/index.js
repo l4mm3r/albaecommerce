@@ -100,7 +100,7 @@ const createCard = (data, containerClass) => {
   );
   const footer = createFooterElement("flex justify-end");
   const button = createButtonElement(
-    "bg-orange-400 px-2 rounded-full -mr-2 mt-3 text-gray-900 font-dm addToCart",
+    "bg-orange-400 px-2 rounded-full -mr-2 mt-3 text-gray-900 font-dm addToCart hover:orange-300 hover:text-gray-50",
     "add to cart +",
   );
 
@@ -137,7 +137,7 @@ const createBigCard = (data) => {
   );
   const footer = createFooterElement("flex justify-end");
   const button = createButtonElement(
-    "bg-orange-400 px-2 rounded-full -mr-2 mt-3 text-gray-900 font-dm addToCart",
+    "bg-orange-400 px-2 rounded-full -mr-2 mt-3 text-gray-900 font-dm addToCart hover:orange-300 hover:text-gray-50",
     "add to cart +",
   );
 
@@ -245,7 +245,7 @@ const updateQuantity = document.querySelector(".listCart");
 const clearCart = document.querySelector(".clearCarTab");
 let carts = [];
 
-//evento para escuchar cuando hacen click en addtocart topSellers
+//evento para escuchar cuando hacen click en addtocar
 const handleAddToCart = (event) => {
   const positionClick = event.target;
   if (positionClick.classList.contains("addToCart")) {
